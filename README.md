@@ -6,4 +6,4 @@ ProviderWindow
 RoomForm
 AccommodationForm
 SearchAndBookAccommodations
-ShowCustomerReservations
+
