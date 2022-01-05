@@ -2,8 +2,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -25,6 +23,7 @@ public class SearchAndBookAccommodations extends JPanel {
                 return false;
             }
         };
+
         Color white=new Color(255, 255, 255);
         JTable table = new JTable(model);
         table.setOpaque(false);
@@ -51,10 +50,10 @@ public class SearchAndBookAccommodations extends JPanel {
         JTextField leavingDate = new JTextField("xx/yy/wwww");
         JLabel invalidDates = new JLabel("Invalid Dates");
         invalidDates.setForeground(Color.red);
-        applyFilters.setBounds(50,550,100,30);
-        price.setBounds(20,260,150,80);
+        applyFilters.setBounds(50,650,100,30);
+        price.setBounds(20,480,150,80);
         price.setBackground(Color.BLACK);
-        people.setBounds(20,350,150,80);
+        people.setBounds(20,550,150,80);
         price.setPaintLabels(true);
         price.setPaintTicks(true);
         price.setPaintTrack(true);
@@ -65,15 +64,15 @@ public class SearchAndBookAccommodations extends JPanel {
         price.setMajorTickSpacing(500);
         people.setMinorTickSpacing(1);
         people.setMajorTickSpacing(4);
-        pool.setBounds(50,10,100,30);
-        restaurant.setBounds(50,50,100,30);
-        wifi.setBounds(50,90,100,30);
-        parking.setBounds(50,130,100,30);
-        pets.setBounds(50,170,100,30);
-        country.setBounds(50,450,100,30);
-        city.setBounds(50,500,100,30);
-        arrivingDate.setBounds(50,600,100,30);
-        leavingDate.setBounds(50,650,100,30);
+        pool.setBounds(50,390,100,30);
+        restaurant.setBounds(50,350,100,30);
+        wifi.setBounds(50,230,100,30);
+        parking.setBounds(50,270,100,30);
+        pets.setBounds(50,310,100,30);
+        country.setBounds(50,190,100,30);
+        city.setBounds(50,150,100,30);
+        arrivingDate.setBounds(50,70,100,30);
+        leavingDate.setBounds(50,110,100,30);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(new MouseListener() {
                                    @Override
@@ -124,10 +123,11 @@ public class SearchAndBookAccommodations extends JPanel {
                                                    String location = table.getValueAt(rowIndex,4).toString();
                                                    String roomNumberTxt = table.getValueAt(rowIndex,5).toString();
                                                    int roomNumber = Integer.parseInt(roomNumberTxt);
+                                                   roomNumber--;
                                                    Accommodation accommodation = listOfAccommodations.getSpecificAccommodation(accommodationName,location);
                                                    if(accommodation != null){
-                                                       Reservation reservation = new Reservation(accommodation,customer,date,roomNumber);
-                                                       accommodation.getSpecificRoom(roomNumber-1).addReservedDates(dateOption);
+                                                       Reservation reservation = new Reservation(accommodation,customer,dateOption,roomNumber);
+                                                       accommodation.getSpecificRoom(roomNumber).addReservedDates(dateOption);
                                                        listOfReservations.addNewReservation(reservation);
                                                        listOfAccommodations.updateAccommodationList();
                                                        model.removeRow(rowIndex);
@@ -218,7 +218,6 @@ public class SearchAndBookAccommodations extends JPanel {
                 updateTable(model,parkingOption,wifiOption,poolOption,restaurantOption,petsOption,capacity,maxPrice,countryTxt,cityTxt,listOfAccommodations,dateOption);
             }
         });
-
         add(invalidDates);
         add(arrivingDate);
         add(leavingDate);
@@ -249,7 +248,6 @@ public class SearchAndBookAccommodations extends JPanel {
         model.setRowCount(0);
 
         for (String[] strings : newTable) {
-            System.out.println(strings[7]);
             model.addRow(new Object[] {strings[0],strings[1],strings[2],strings[3],strings[4],strings[5],strings[6],strings[7],strings[8]});
         }
     }
@@ -299,8 +297,8 @@ public class SearchAndBookAccommodations extends JPanel {
             data[count][8] = x.getSpecificRoom(acc.get(x)).getView();
             count++;
         }
-        System.out.println("Length of the data "+data.length);
         return data;
     }
 
 }
+
