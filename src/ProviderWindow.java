@@ -4,10 +4,7 @@ import java.awt.*;
 public class ProviderWindow extends JPanel {
 
     JButton addAccommodation = new JButton("Add Accommodation");
-    JButton changeAccommodation = new JButton("Change Accommodation");
     JButton showAccommodation = new JButton("Show All Accommodation");
-    JButton showReservedAccommodation = new JButton("Show Reserved Accommodation");
-    JButton deleteAccommodation = new JButton("Delete an Accommodation");
     JButton showProfile = new JButton("Show Profile");
     JButton showInbox = new JButton("Show Inbox");
     JButton logout = new JButton("Log out");
@@ -16,19 +13,13 @@ public class ProviderWindow extends JPanel {
         this.setSize(new Dimension(1500, 800));
         setOpaque(false);
         addAccommodation.setBounds(100,50,300,50);
-        deleteAccommodation.setBounds(100,100,300,50);
-        changeAccommodation.setBounds(100,150,300,50);
         showAccommodation.setBounds(100,200,300,50);
-        showReservedAccommodation.setBounds(100,250,300,50);
         showProfile.setBounds(100,300,300,50);
         showInbox.setBounds(100,350,300,50);
         logout.setBounds(100,400,300,50);
 
         addAccommodation.setFocusable(false);
-        deleteAccommodation.setFocusable(false);
-        changeAccommodation.setFocusable(false);
         showAccommodation.setFocusable(false);
-        showReservedAccommodation.setFocusable(false);
         showProfile.setFocusable(false);
         showInbox.setFocusable(false);
         logout.setFocusable(false);
@@ -56,10 +47,7 @@ public class ProviderWindow extends JPanel {
         });
 
         add(addAccommodation);
-        add(changeAccommodation);
         add(showAccommodation);
-        add(showReservedAccommodation);
-        add(deleteAccommodation);
         add(showProfile);
         add(showInbox);
         add(logout);
