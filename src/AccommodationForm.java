@@ -172,9 +172,10 @@ public class AccommodationForm extends JPanel {
             Accommodation accommodation = new Accommodation(provider,nameTxt,selectedTypeTxt,wifiOption,parkingOption,poolOption,restaurantOption,petsOption,location);
 
             removeAll();
-            repaint();
-            add(new RoomForm(accommodation,listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
-
+            mainFrame.remove(this);
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new RoomForm(accommodation, listOfAccommodations, listOfAccounts,listOfReservations, mainFrame));
+            mainFrame.getContentPane().repaint();
         });
         add(error);
         add(facilities);
@@ -206,3 +207,4 @@ public class AccommodationForm extends JPanel {
     }
 
 }
+

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
+
 public class MainFrame extends JFrame {
     private LogInWindow login;
 
@@ -33,6 +34,8 @@ public class MainFrame extends JFrame {
         this.setLayout(null);
         this.setVisible(true);
     }
+
+    public void addInitialImage() { this.add(img); }
 
     public void removeInitialImage(){
         this.remove(img);

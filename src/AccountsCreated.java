@@ -22,6 +22,10 @@ public class AccountsCreated {
         }
         else{
             Admin admin = new Admin("gregtsoum","123","gregTsoumakas@email.com","Greece","Gregory Tsoumakas");
+            Admin admin2 = new Admin("gmeditsk","456","georgeMeditsk@email.com","Greece","Georgios Meditskos");
+            Admin admin3 = new Admin("itsMyrto","football","itsMyrto@email.com","Greece","Myrto Gkogkou");
+            allAccounts.add(admin2);
+            allAccounts.add(admin3);
             allAccounts.add(admin);
             updateAccounts();
         }
@@ -49,14 +53,32 @@ public class AccountsCreated {
         return exists;
     }
 
+    public ArrayList<Message> getTheMessageListOfAUser(User user){
+        ArrayList<Message> messages = new ArrayList<>();
+        for(User x:allAccounts){
+            if(x.getEmail().equals(user.getEmail())){
+                messages = user.getMessages();
+                break;
+            }
+        }
+        return messages;
+    }
 
     public void createAccountForCustomers(Customer customer) {
-        customer.setApproved(true);
         addNewAccount(customer);
     }
 
+    public ArrayList<User> getUnapprovedAccount(){
+        ArrayList<User> unapproved = new ArrayList();
+        for(User x:allAccounts){
+            if(!x.getApproved()){
+                unapproved.add(x);
+            }
+        }
+        return unapproved;
+    }
+
     public void createAccountForProviders(Provider provider){
-        provider.setApproved(true);
         addNewAccount(provider);
     }
 

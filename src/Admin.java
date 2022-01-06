@@ -21,6 +21,7 @@ public class Admin extends User{
     public Admin(String username, String password, String email, String country,String fullName) {
         super(username, password, email, country,fullName);
         setTypeOfUser("admin");
+        setApproved(true);
     }
 
 

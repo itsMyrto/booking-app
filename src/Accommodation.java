@@ -2,14 +2,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
-* This class represents an accommodation.
-* It has some characteristics like what type is it, the location, the name, if it has parking or Wi-Fi.
-* It has an ArrayList that keeps all the accommodation's rooms.
-*/
+ * This class represents an accommodation.
+ * It has some characteristics like what type is it, the location, the name, if it has parking or Wi-Fi.
+ * It has an ArrayList that keeps all the accommodation's rooms.
+ */
 public class Accommodation implements Serializable {
     private Provider provider;
     private String name;
-    private String type; 
+    private String type;
     private boolean hasWifi;
     private boolean hasParking;
     private Location location;
@@ -20,22 +20,22 @@ public class Accommodation implements Serializable {
 
 
     /**
-    * this is an empty constructor
-    */
+     * this is an empty constructor
+     */
     public Accommodation()
     {
         rooms = new ArrayList<>();
     }
 
     /**
-    * This is a constructor.
-    * Creates an accommodation with specified name, country, type, location and whether or not it has parking or Wi-Fi
-    * @param name the name of the accommodation
-    * @param type the type of the accommodation (for example "hotel")
-    * @param hasWifi whether or not the accommodation has Wi-Fi
-    * @param hasParking whether or not the accommodation has parking
-    * @param location the location of the accommodation
-    */
+     * This is a constructor.
+     * Creates an accommodation with specified name, country, type, location and whether or not it has parking or Wi-Fi
+     * @param name the name of the accommodation
+     * @param type the type of the accommodation (for example "hotel")
+     * @param hasWifi whether or not the accommodation has Wi-Fi
+     * @param hasParking whether or not the accommodation has parking
+     * @param location the location of the accommodation
+     */
     public Accommodation(Provider provider,String name,String type, boolean hasWifi, boolean hasParking,boolean hasPool,boolean hasRestaurant,boolean petsAllowed, Location location)
     {
         rooms = new ArrayList<>();
@@ -68,14 +68,14 @@ public class Accommodation implements Serializable {
     public void setName(String name){
         this.name = name;
     }
-    
-     /**
+
+    /**
      * @return  the name of the accommodation
      */
     public String getName(){
         return this.name;
     }
-    
+
     /**
      * This method sets the type of the Accommodation (hotel/apartment etc.)
      * @param type the type of the Accommodation hotel/apartment etc.
@@ -113,46 +113,46 @@ public class Accommodation implements Serializable {
     }
 
     /**
-    * @return  the type of the Accommodation
-    */
+     * @return  the type of the Accommodation
+     */
     public String getType()
     {
         return this.type;
     }
 
     /**
-    * @return  true/false if the Accommodation has Wi-Fi or not
-    */
+     * @return  true/false if the Accommodation has Wi-Fi or not
+     */
     public boolean getHasWifi()
     {
         return this.hasWifi;
     }
 
     /**
-    * @return  true/false if the Accommodation has parking or not
-    */
+     * @return  true/false if the Accommodation has parking or not
+     */
     public boolean getHasParking()
     {
         return this.hasParking;
     }
 
     /**
-    * @return  the location of the Accommodation
-    */
+     * @return  the location of the Accommodation
+     */
     public Location getLocation()
     {
         return this.location;
     }
 
     /**
-    * @return  location as a string
-    */
+     * @return  location as a string
+     */
     public String getStringLocation()
     {
         return location.getCountry()+" "+location.getTown () +" "+ location.getStreet () +" "+ location.getStreetNumber ();
     }
-    
-    /** 
+
+    /**
      * This method adds a room to the arraylist with rooms
      * @param room is one room
      */
@@ -168,7 +168,7 @@ public class Accommodation implements Serializable {
     public Provider getProvider(){
         return provider;
     }
-    /** 
+    /**
      * This method removes a room from  the arraylist with rooms
      * @param index is the number of one room
      */
@@ -181,17 +181,17 @@ public class Accommodation implements Serializable {
     }
 
     /**
-    * @return  how many rooms has the Accommodation
-    */
+     * @return  how many rooms has the Accommodation
+     */
     public int getNumberOfRooms()
     {
         return rooms.size();
     }
 
     /**
-    * @return  a specific room from the arraylist with rooms based on the room's number
-    * @param index is the room's number
-    */
+     * @return  a specific room from the arraylist with rooms based on the room's number
+     * @param index is the room's number
+     */
 
     public Room getSpecificRoom(int index)
     {

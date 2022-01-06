@@ -249,9 +249,13 @@ public class LogInWindow extends JPanel{
                     mainFrame.getContentPane().repaint();
                 }
                 else {
-
+                    mainFrame.remove(this);
+                    mainFrame.getContentPane().repaint();
+                    mainFrame.getContentPane().add(new AdminWindow(((Admin) user), listOfAccounts, listOfAccommodations,listOfReservations,mainFrame));
+                    mainFrame.getContentPane().repaint();
                 }
             }
         }
     }
 }
+

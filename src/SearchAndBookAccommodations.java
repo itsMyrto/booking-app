@@ -64,7 +64,11 @@ public class SearchAndBookAccommodations extends JPanel {
         for(int i=0; i<table.getColumnCount(); i++){
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
-
+        JLabel label2 = new JLabel("Please fill the form if you want to book an accommodation");
+        label2.setFont(new Font("sans serif",Font.BOLD+Font.ITALIC,14));
+        label2.setForeground(Color.red);
+        label2.setBounds(380,50,400,20);
+        add(label2);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(MARGIN_BETWEEN_TABLE_AND_EDGES, MARGIN_TABLE_FROM_TOP, TABLE_WIDTH, TABLE_HEIGHT);
         scrollPane.setVisible(true);
@@ -105,29 +109,57 @@ public class SearchAndBookAccommodations extends JPanel {
                 if(!dateOption.checkingTheDates()) filtersPanel.invalidDates.setVisible(true);
 
                 if(rowIndex != -1){
+                    JFrame frame = new JFrame("Make a reservation");
+                    frame.setSize(500,500);
+                    frame.setResizable(false);
+                    frame.getContentPane().setBackground(Color.white);
+                    frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                     String[] options = {"Yes","No"};
-                    int option = JOptionPane.showOptionDialog(null, "Are you sure you want to book it?", "Confirm Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-                    if (option != -1) {
-                        if(options[option].equals("Yes")){
-                            String accommodationName = table.getValueAt(rowIndex,0).toString();
-                            String location = table.getValueAt(rowIndex,4).toString();
-                            String roomNumberTxt = table.getValueAt(rowIndex,5).toString();
-                            int roomNumber = Integer.parseInt(roomNumberTxt);
-                            roomNumber--;
-                            Accommodation accommodation = listOfAccommodations.getSpecificAccommodation(accommodationName,location);
-                            if(accommodation != null){
-                                Reservation reservation = new Reservation(accommodation,customer,dateOption,roomNumber);
-                                accommodation.getSpecificRoom(roomNumber).addReservedDates(dateOption);
-                                listOfReservations.addNewReservation(reservation);
-                                listOfAccommodations.updateAccommodationList();
-                                model.removeRow(rowIndex);
-                            }
-
+                    JLabel label = new JLabel("Are you sure you want to book this?");
+                    label.setBounds(90,50,400,30);
+                    label.setForeground(new Color(0x06307C));
+                    label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,18));
+                    JButton yes = new JButton("Yes");
+                    yes.setBackground(new Color(0x06307C));
+                    yes.setForeground(Color.WHITE);
+                    JButton no = new JButton("No");
+                    no.setBackground(new Color(0x06307C));
+                    no.setForeground(Color.WHITE);
+                    yes.setFocusable(false);
+                    no.setFocusable(false);
+                    yes.setBounds(100,300,100,30);
+                    no.setBounds(300,300,100,30);
+                    frame.add(label);
+                    frame.add(yes);
+                    frame.add(no);
+                    yes.addActionListener(e1 -> {
+                        String accommodationName = table.getValueAt(rowIndex,0).toString();
+                        String location = table.getValueAt(rowIndex,4).toString();
+                        String roomNumberTxt = table.getValueAt(rowIndex,5).toString();
+                        int roomNumber = Integer.parseInt(roomNumberTxt);
+                        roomNumber--;
+                        Accommodation accommodation = listOfAccommodations.getSpecificAccommodation(accommodationName,location);
+                        if(accommodation != null){
+                            System.out.println(accommodation.getNumberOfRooms()+" "+roomNumber);
+                            Reservation reservation = new Reservation(accommodation,customer,dateOption,roomNumber);
+                            accommodation.getSpecificRoom(roomNumber).addReservedDates(dateOption);
+                            listOfReservations.addNewReservation(reservation);
+                            listOfAccommodations.updateAccommodationList();
+                            model.removeRow(rowIndex);
+                            frame.dispose();
                         }
-                    }
-                }
+                    });
 
+                    no.addActionListener(e1 -> {
+                        frame.dispose();
+                    });
+
+                    frame.setLayout(null);
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+                }
             }
+
 
             @Override
             public void mouseExited(MouseEvent e) {

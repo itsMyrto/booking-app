@@ -9,15 +9,30 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class TrackingWindow extends JPanel {
-    public TrackingWindow(Admin admin,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations){
+    public TrackingWindow(Admin admin,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,MainFrame mainFrame){
         setLayout(null);
         setSize(1500,800);
+        setBackground(Color.WHITE);
+        JLabel label2 = new JLabel("Enter an email:");
+        label2.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        label2.setForeground(new Color(0x06307C));
+        label2.setBounds(20,145,400,30);
+        label2.setVisible(false);
+        add(label2);
+
+        JLabel label = new JLabel("Track Customers & Providers");
+        label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
+        label.setForeground(new Color(0x06307C));
+        label.setBounds(500,50,400,30);
+        add(label);
+
         String [] tableHeaders2 = {"Customer Email","Name","Country","City","Room Number","Total Price","Dates"};
         String [] tableHeaders = {"Provider Email","Name","Type","Country","City","Rooms","Reservations"};
         String[][] data = makeTable(listOfAccommodations,listOfReservations);
         JTextField userEmail = new JTextField("User Email");
         JLabel error = new JLabel();
-        userEmail.setBounds(400,50,200,30);
+        error.setBounds(400,150,200,30);
+        userEmail.setBounds(170,150,220,25);
         DefaultTableModel model = new DefaultTableModel(data,tableHeaders){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -37,12 +52,12 @@ public class TrackingWindow extends JPanel {
                     Component arrow = comps[0];
                     arrow.setSize(20, height);
                     arrow.setLocation(width - arrow.getWidth(), 0);
+                    arrow.setBackground(new Color(131, 167, 245));
                 }
             }
         };
 
         filters.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 error.setVisible(false);
@@ -55,6 +70,7 @@ public class TrackingWindow extends JPanel {
                     updateTable(optionFromComboBox, model, listOfAccounts, listOfAccommodations, listOfReservations);
                 }
                 else if(optionFromComboBox==0){
+                    label2.setVisible(false);
                     userEmail.setVisible(false);
                     for(int i=0;i<7;i++){
                         table.getColumnModel().getColumn(i).setHeaderValue(tableHeaders[i]);
@@ -66,6 +82,7 @@ public class TrackingWindow extends JPanel {
                     }
                 }
                 else if(optionFromComboBox==3){
+                    label2.setVisible(true);
                     userEmail.setVisible(true);
                     userEmail.addActionListener(e1 -> {
                         String email = userEmail.getText();
@@ -73,21 +90,22 @@ public class TrackingWindow extends JPanel {
                         if(user == null){
                             error.setForeground(Color.red);
                             error.setText("There is no user with that email");
-                            error.setBounds(500,5,200,30);
                             error.setVisible(true);
                             updateTableForASpecificUser(null,optionFromComboBox,model,listOfAccounts,listOfAccommodations,listOfReservations);
                             return;
                         }
+                        else if(user.getEmail().equals(admin.getEmail())){
+                            error.setVisible(true);
+                            error.setText("This is you");
+                        }
                         else if(user instanceof Admin){
                             error.setForeground(Color.red);
                             error.setText("You cannot track another Admin");
-                            error.setBounds(500,5,200,30);
                             error.setVisible(true);
                             return;
                         }
                         error.setVisible(false);
                         for(int i=0;i<7;i++){
-                            System.out.println("Here is the problem");
                             table.getColumnModel().getColumn(i).setHeaderValue(tableHeaders[i]);
                             String[][] accommodationData = makeAccommodationList(listOfAccommodations,listOfReservations,model);
                             for (String[] strings : accommodationData) {
@@ -99,12 +117,15 @@ public class TrackingWindow extends JPanel {
                 }
             }
         });
-        filters.setBounds(100,10,250,30);
-        table.setBackground(Color.CYAN);
+        filters.setBounds(170,100,220,20);
+        filters.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
+        filters.setForeground(new Color(0x06307C));
+        table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC+Font.BOLD, 12));
+        table.getTableHeader().setBackground(new Color(182, 219, 252));
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setVisible(true);
-        scrollPane.setBounds(50,100,1400,200);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        scrollPane.setBounds(170,200,1200,500);
+        scrollPane.getViewport().setBackground(Color.WHITE);
+        //table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         userEmail.setVisible(false);
         table.setOpaque(false);
         add(userEmail);

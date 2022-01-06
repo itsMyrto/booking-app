@@ -76,6 +76,8 @@ public class ShowCustomerReservations extends JPanel {
                 int rowIndex = table.getSelectedRow();
                 if(rowIndex != -1){
                     JFrame frame = new JFrame("Delete Reservation");
+                    frame.setResizable(false);
+                    frame.getContentPane().setBackground(Color.white);
                     frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                     String accommodationName = table.getValueAt(rowIndex,0).toString();
                     String roomNumberTxt = table.getValueAt(rowIndex,5).toString();
@@ -83,11 +85,32 @@ public class ShowCustomerReservations extends JPanel {
                     String dateTxt = table.getValueAt(rowIndex,10).toString();
                     String[] date = dateTxt.split("/");
                     String[] yearTxt = date[2].split("-");
-                    JButton cancel = new JButton("Cancel this Reservation");
-                    JLabel label = new JLabel("Reservation Details");
+                    JButton cancel = new JButton("Delete");
+                    JLabel label = new JLabel("Overview");
                     JLabel error = new JLabel();
-                    JButton back = new JButton("Go Back");
-                    cancel.setBounds(50,300,200,30);
+                    JButton back = new JButton("Return");
+                    JLabel dates = new JLabel("->Reserved Dates:");
+                    JLabel datesString = new JLabel(dateTxt);
+                    JLabel accName = new JLabel("->Accommodation Name:");
+                    JLabel accNameTxt = new JLabel(accommodationName);
+                    JLabel roomReserved = new JLabel("->Reserved Room: "+roomNumberTxt);
+                    roomReserved.setForeground(new Color(0x06307C));
+                    roomReserved.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    roomReserved.setBounds(50,230,300,50);
+                    accName.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    accName.setForeground(new Color(0x06307C));
+                    accName.setBounds(50,150,200,50);
+                    accNameTxt.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    accNameTxt.setBounds(235,150,200,50);
+                    accNameTxt.setForeground(new Color(0x06307C));
+                    dates.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    dates.setForeground(new Color(0x06307C));
+                    dates.setBounds(50,190,200,50);
+                    datesString.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    datesString.setBounds(200,190,200,50);
+                    datesString.setForeground(new Color(0x06307C));
+                    back.setFocusable(false);
+                    cancel.setBounds(20,350,200,30);
                     int day = Integer.parseInt(date[0]);
                     int month = Integer.parseInt(date[1]);
                     int year = Integer.parseInt(yearTxt[0]);
@@ -97,20 +120,31 @@ public class ShowCustomerReservations extends JPanel {
                     System.out.println(day+" "+month+" "+year);
                     System.out.println(roomNumber);
                     Date dateOfTheReservation = new Date(day,month,year,day2,month2,year2);
+                    Reservation reservation = listOfReservations.getASpecificReservation(customer,accommodationName,dateOfTheReservation,roomNumber);
+                    JLabel state = new JLabel();
+                    if(reservation.getCancelled()){
+                        state.setForeground(Color.red);
+                        state.setText("->Reservation Status: "+"Reservation Cancelled");
+                    }
+                    else{
+                        state.setText("->Reservation Status: "+"Reservation Active");
+                        state.setForeground(Color.GREEN);
+                    }
+                    state.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    state.setBounds(50,275,400,30);
                     LocalDate dateNow = LocalDate.now();
                     cancel.setFocusable(false);
                     cancel.addActionListener(e1 -> {
-                        Reservation reservation = listOfReservations.getASpecificReservation(customer,accommodationName,dateOfTheReservation,roomNumber);
                         error.setForeground(Color.red);
                         if(reservation.getCancelled()){
                             error.setText("You cannot cancel a cancelled reservation");
-                            error.setBounds(100,100,300,50);
+                            error.setBounds(100,400,300,50);
                         }
                         else{
                             if(year < dateNow.getYear() || year == dateNow.getYear() && month < dateNow.getMonthValue() || (year == dateNow.getYear() && month == dateNow.getMonthValue() && day<dateNow.getDayOfMonth())){
-                                error.setBounds(100,100,300,100);
+                                error.setBounds(100,400,300,50);
                                 error.setText("You cannot cancel a reservation that is overdue");
-                                error.setBounds(100,100,300,50);
+
                             }
                             else{
                                 reservation.setCancelled(true);
@@ -125,11 +159,23 @@ public class ShowCustomerReservations extends JPanel {
                         frame.dispose();
                     });
 
-                    label.setBounds(300,300,600,200);
-                    back.setBounds(200,300,100,30);
+                    label.setBounds(200,0,600,200);
+                    label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,18));
+                    label.setForeground(new Color(0x06307C));
+                    back.setBounds(250,350,200,30);
+                    back.setForeground(Color.WHITE);
+                    back.setBackground(new Color(0x06307C));
+                    cancel.setBackground(new Color(0x06307C));
+                    cancel.setForeground(Color.WHITE);
                     frame.add(back);
+                    frame.add(dates);
+                    frame.add(roomReserved);
+                    frame.add(datesString);
+                    frame.add(accName);
+                    frame.add(accNameTxt);
                     frame.add(cancel);
                     frame.add(label);
+                    frame.add(state);
                     frame.add(error);
                     frame.setSize(500,500);
                     frame.setLayout(null);
@@ -151,6 +197,12 @@ public class ShowCustomerReservations extends JPanel {
             public void mouseClicked(MouseEvent e) {
             }
         });
+
+        JLabel note = new JLabel("Delete a reservation by clicking on it");
+        note.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        note.setForeground(Color.red);
+        note.setBounds(620,150,300,30);
+        add(note);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(170,200,1200,500);
         scrollPane.getViewport().setBackground(Color.WHITE);

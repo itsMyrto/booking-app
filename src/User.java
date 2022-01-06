@@ -12,7 +12,7 @@ public class User implements Serializable {
     private String country;
     private String fullName;
     private String typeOfUser;
-    private boolean approved = true;
+    private boolean approved;
     private ArrayList<Message> inbox;
 
     /**
@@ -37,6 +37,7 @@ public class User implements Serializable {
         this.username = username;
         this.fullName = fullName;
         inbox = new ArrayList<>();
+        approved = false;
     }
 
     /**
@@ -62,6 +63,9 @@ public class User implements Serializable {
         inbox.add(message);
     }
 
+    public ArrayList<Message> getMessages(){
+        return inbox;
+    }
     /**
      * This method prints all the messages that a user received
      * and for each message it prints the name & the email of the sender

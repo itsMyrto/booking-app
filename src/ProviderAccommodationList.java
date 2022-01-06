@@ -12,11 +12,25 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class ProviderAccommodationList extends JPanel {
-    ProviderAccommodationList(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame frame){
+    ProviderAccommodationList(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame mainFrame){
         JButton returnButton = new JButton("Return");
+        JLabel label2 = new JLabel("Click to an accommodation to make changes");
+        label2.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        label2.setForeground(Color.red);
+        label2.setBounds(600,50,400,30);
+        add(label2);
+        JLabel label = new JLabel("My Accommodation List");
+        label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
+        label.setForeground(new Color(0x06307C));
+        label.setBounds(600,10,400,30);
         setSize(1500,800);
         setOpaque(false);
         setLayout(null);
+        JLabel chooseFilter = new JLabel("Choose a filter");
+        chooseFilter.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 15));
+        chooseFilter.setForeground(new Color(6, 48, 124));
+        chooseFilter.setBounds(50,120,200,20);
+        add(chooseFilter);
         String [] tableHeaders = {"Name","Type","Country","City","Address","Rooms","Wifi","Parking","Pool","Restaurant","Pets Allowed"};
         String [] tablesHeaders2 = {"Name","Type","Country","City","Address","Room Number","Total Price","Customer Email","Customer Name","Customer Origin","Dates"};
         String[][] data = makeTable(listOfAccommodations,provider);
@@ -39,6 +53,7 @@ public class ProviderAccommodationList extends JPanel {
                     Component arrow = comps[0];
                     arrow.setSize(20, height);
                     arrow.setLocation(width - arrow.getWidth(), 0);
+                    arrow.setBackground(new Color(131, 167, 245));
                 }
             }
         };
@@ -64,12 +79,15 @@ public class ProviderAccommodationList extends JPanel {
                 }
             }
         });
-        filters.setBounds(100,10,250,30);
-        table.setBackground(Color.CYAN);
+
+        table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC+Font.BOLD, 12));
+        table.getTableHeader().setBackground(new Color(182, 219, 252));
+        filters.setBounds(10,150,230,20);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setVisible(true);
-        scrollPane.setBounds(50,150,1000,200);
-        returnButton.setBounds(500,10,80,30);
+        scrollPane.getViewport().setBackground(new Color(0xFFFFFF));
+        scrollPane.setBounds(200,200,1200,300);
+        returnButton.setBounds(0,0,80,30);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(new MouseListener() {
             @Override
@@ -82,7 +100,105 @@ public class ProviderAccommodationList extends JPanel {
                 if(rowIndex != -1){
                     JFrame frame = new JFrame("Modify Accommodations");
                     JLabel error = new JLabel("Invalid information");
+                    frame.getContentPane().setBackground(Color.WHITE);
+                    frame.setResizable(false);
+
+                    JLabel label = new JLabel("Change information");
+                    label.setForeground(new Color(0x06307C));
+                    label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,26));
+                    label.setBounds(580,-10,300,50);
+                    frame.add(label);
+
+                    JLabel nameA = new JLabel("Change the name:");
+                    nameA.setForeground(new Color(0x06307C));
+                    nameA.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,16));
+                    nameA.setBounds(100,50,300,50);
+                    frame.add(nameA);
+
+                    JLabel typeA = new JLabel("Change the type:");
+                    typeA.setForeground(new Color(0x06307C));
+                    typeA.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,16));
+                    typeA.setBounds(100,150,300,50);
+                    frame.add(typeA);
+
+                    JLabel roomA = new JLabel("Choose a room:");
+                    roomA.setForeground(new Color(0x06307C));
+                    roomA.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,16));
+                    roomA.setBounds(100,250,300,50);
+                    frame.add(roomA);
+
+                    JLabel capacityA = new JLabel("Change the capacity:");
+                    capacityA.setForeground(new Color(0x06307C));
+                    capacityA.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,16));
+                    capacityA.setBounds(100,350,300,50);
+                    frame.add(capacityA);
+
+                    JLabel priceA = new JLabel("Change the price(one night):");
+                    priceA.setForeground(new Color(0x06307C));
+                    priceA.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,16));
+                    priceA.setBounds(100,450,300,50);
+                    frame.add(priceA);
+
+                    JLabel numberOfBedsA = new JLabel("Change the number of beds:");
+                    numberOfBedsA.setForeground(new Color(0x06307C));
+                    numberOfBedsA.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,16));
+                    numberOfBedsA.setBounds(100,550,300,50);
+                    frame.add(numberOfBedsA);
+
+                    JLabel newRoom = new JLabel("Add a new Room");
+                    newRoom.setForeground(new Color(0x06307C));
+                    newRoom.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,16));
+                    newRoom.setBounds(620,50,300,50);
+                    frame.add(newRoom);
+
+                    JLabel chooseView = new JLabel("Select the view");
+                    chooseView.setForeground(new Color(0x06307C));
+                    chooseView.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,16));
+                    chooseView.setBounds(600,250,300,50);
+                    frame.add(chooseView);
+
+                    JButton addRoom = new JButton("Add Room");
+                    JLabel error2 = new JLabel("Invalid Information");
                     error.setForeground(Color.red);
+                    error.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    addRoom.setFocusable(false);
+                    addRoom.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    addRoom.setBackground(new Color(0x06307C));
+                    addRoom.setForeground(Color.white);
+                    JTextField newRoomCapacity = new JTextField("Room Capacity");
+                    JTextField newRoomPrice = new JTextField("Price For One Night");
+                    JTextField newRoomBeds = new JTextField("Number of Beds");
+                    JComboBox<String> view;
+                    String[] viewType = {"Sea","Forest","The city","Landmark","Lake"};
+                    view = new JComboBox<>(viewType){
+                        @Override
+                        public void setBounds(int x, int y, int width, int height) {
+                            super.setBounds(x, y, width, height);
+                            Component[] comps = getComponents();
+                            if (comps != null && comps.length >= 1) {
+                                Component arrow = comps[0];
+                                arrow.setSize(20, height);
+                                arrow.setLocation(width - arrow.getWidth(), 0);
+                                arrow.setBackground(new Color(131, 167, 245));
+                            }
+                        }
+                    };
+                    view.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
+                    newRoomCapacity.setBounds(600,100,200,25);
+                    newRoomPrice.setBounds(600,150,200,25);
+                    newRoomBeds.setBounds(600,200,200,25);
+                    view.setBounds(600,300,200,25);
+                    addRoom.setBounds(600,450,200,30);
+                    view.setSelectedIndex(0);
+
+                    frame.add(newRoom);
+                    frame.add(newRoomCapacity);
+                    frame.add(newRoomBeds);
+                    frame.add(newRoomPrice);
+                    frame.add(view);
+                    frame.add(addRoom);
+                    error2.setForeground(Color.red);
+                    frame.add(error2);
                     frame.setSize(1500,800);
                     frame.setLocationRelativeTo(null);
                     frame.setLayout(null);
@@ -90,6 +206,10 @@ public class ProviderAccommodationList extends JPanel {
                     String nameOfTheAcc = table.getValueAt(rowIndex,0).toString();
                     String address = table.getValueAt(rowIndex,4).toString();
                     Accommodation selectedAccommodation = listOfAccommodations.getSpecificAccommodation(nameOfTheAcc,address);
+                    if(selectedAccommodation.getNumberOfRooms()==0){
+                        frame.dispose();
+                        return;
+                    }
                     JTextField name = new JTextField(selectedAccommodation.getName());
                     JTextField type = new JTextField(selectedAccommodation.getType());
                     JTextField capacity = new JTextField(String.valueOf(selectedAccommodation.getSpecificRoom(0).getCapacity()));
@@ -127,6 +247,37 @@ public class ProviderAccommodationList extends JPanel {
                         }
                     });
 
+
+                    addRoom.addActionListener(e1 -> {
+                        String capacityTxt = newRoomCapacity.getText();
+                        String bedsTxt = newRoomBeds.getText();
+                        String priceTxt = newRoomPrice.getText();
+                        int selectedViewIndex = view.getSelectedIndex();
+                        String selectedView = viewType[selectedViewIndex];
+                        double priceDouble;
+                        int bedsInt,capacityInt;
+                        try {
+                            bedsInt = Integer.parseInt(bedsTxt);
+                            priceDouble = Double.parseDouble(priceTxt);
+                            capacityInt = Integer.parseInt(capacityTxt);
+                        } catch(Exception er){
+                            error.setText("Invalid Information");
+                            error.setBounds(630,400,200,30);
+                            //er.printStackTrace();
+                            return;
+                        }
+                        if(!(capacityTxt.isEmpty() && bedsTxt.isEmpty() && priceTxt.isEmpty())){
+                            Room room = new Room(capacityInt,priceDouble,selectedView,bedsInt);
+                            System.out.println("Room Added");
+                            newRoomCapacity.setText("Room Capacity");
+                            newRoomPrice.setText("Price for one Night");
+                            newRoomBeds.setText("Number of Beds");
+                            selectedAccommodation.addRoom(room);
+                            listOfAccommodations.updateAccommodationList();
+                        }
+
+                    });
+
                     changes.addActionListener(e1 -> {
                         String capacityTxt = capacity.getText();
                         String typeTxt = type.getText();
@@ -141,7 +292,7 @@ public class ProviderAccommodationList extends JPanel {
                             capacityInt = Integer.parseInt(capacityTxt);
 
                         } catch(Exception er){
-                            error.setBounds(200,500,300,100);
+                            error.setBounds(150,620,300,100);
                             return;
                         }
                         if(!capacityTxt.isEmpty() && !name.getText().isEmpty()){
@@ -154,7 +305,23 @@ public class ProviderAccommodationList extends JPanel {
                             listOfAccommodations.updateReservation(listOfReservations,selectedAccommodation);
                             listOfAccommodations.updateAccommodationList();
                             listOfReservations.updateReservation();
-
+                            int optionFromComboBox = filters.getSelectedIndex();
+                            if (optionFromComboBox != 0) {
+                                for(int i=0;i<11;i++){
+                                    table.getColumnModel().getColumn(i).setHeaderValue(tablesHeaders2[i]);
+                                }
+                                updateTable(optionFromComboBox, model, provider, listOfReservations, listOfAccommodations);
+                            }
+                            else{
+                                for(int i=0;i<11;i++){
+                                    table.getColumnModel().getColumn(i).setHeaderValue(tableHeaders[i]);
+                                    String[][] accommodationData = makeAccommodationList(listOfAccommodations,provider,model);
+                                    for (String[] strings : accommodationData) {
+                                        model.addRow(new Object[] {strings[0],strings[1],strings[2],strings[3],strings[4],strings[5],strings[6],strings[7],strings[8],strings[9],strings[10]});
+                                    }
+                                }
+                            }
+                            frame.dispose();
                         }
 
                     });
@@ -163,17 +330,42 @@ public class ProviderAccommodationList extends JPanel {
                     deleteTheAccommodation.addActionListener(e1 -> {
                         listOfAccommodations.deleteAnAccommodation(selectedAccommodation);
                         listOfReservations.removeReservations(selectedAccommodation);
+                        listOfAccommodations.updateAccommodationList();
+                        listOfReservations.updateReservation();
+                        int optionFromComboBox = filters.getSelectedIndex();
+                        if (optionFromComboBox != 0) {
+                            for(int i=0;i<11;i++){
+                                table.getColumnModel().getColumn(i).setHeaderValue(tablesHeaders2[i]);
+                            }
+                            updateTable(optionFromComboBox, model, provider, listOfReservations, listOfAccommodations);
+                        }
+                        else{
+                            for(int i=0;i<11;i++){
+                                table.getColumnModel().getColumn(i).setHeaderValue(tableHeaders[i]);
+                                String[][] accommodationData = makeAccommodationList(listOfAccommodations,provider,model);
+                                for (String[] strings : accommodationData) {
+                                    model.addRow(new Object[] {strings[0],strings[1],strings[2],strings[3],strings[4],strings[5],strings[6],strings[7],strings[8],strings[9],strings[10]});
+                                }
+                            }
+                        }
                         frame.dispose();
                     });
 
                     name.setBounds(100,100,200,30);
-                    deleteTheAccommodation.setBounds(100,200,200,30);
-                    type.setBounds(100,50,200,30);
+                    deleteTheAccommodation.setBounds(700,700,300,30);
+                    deleteTheAccommodation.setForeground(Color.white);
+                    deleteTheAccommodation.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    deleteTheAccommodation.setBackground(new Color(0x06307C));
+                    type.setBounds(100,200,200,30);
                     rooms.setBounds(100,300,200,30);
-                    capacity.setBounds(100,350,200,30);
-                    beds.setBounds(100,390,200,30);
-                    price.setBounds(100,430,200,30);
-                    changes.setBounds(100,480,200,30);
+                    capacity.setBounds(100,400,200,30);
+                    beds.setBounds(100,600,200,30);
+                    price.setBounds(100,500,200,30);
+                    changes.setBounds(350,700,300,30);
+                    changes.setForeground(Color.WHITE);
+                    changes.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    changes.setBackground(new Color(0x06307C));
+                    frame.add(numberOfBedsA);
                     frame.add(capacity);
                     frame.add(beds);
                     frame.add(price);
@@ -202,13 +394,16 @@ public class ProviderAccommodationList extends JPanel {
             }
         });
         returnButton.addActionListener(e -> {
-            removeAll();
-            repaint();
-            add(new ProviderWindow(provider,listOfAccommodations,listOfAccounts,listOfReservations,frame));
+            mainFrame.remove(this);
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new ProviderWindow(provider,listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
+            mainFrame.getContentPane().repaint();
+            mainFrame.addInitialImage();
         });
         add(scrollPane);
         add(returnButton);
         add(filters);
+        add(label);
         setVisible(true);
     }
 

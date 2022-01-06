@@ -15,22 +15,11 @@ public class Main {
 		MainFrame frame = new MainFrame(listOfAccounts,listOfAccommodations,listOfReservations);
 
 	}
-
 }
 
-		/*
-		Scanner scanner = new Scanner(System.in);
-		int option;
-		Menu menu = new Menu();
-
-		do{
-			menu.printMenu();
-			option = scanner.nextInt();
-			while(option != 1 && option != 2 && option != 3 && option !=4){
-				System.out.println("Please enter a valid number!");
-				option = scanner.nextInt();
-			}
-			scanner.nextLine();
-			menu.usersOption(option);
-		}while(option != 4);
-		*/
+/*
+Admins:
+-> Username : gregtsoum , Password:123
+-> Username : gmeditsk , Password: 456
+-> Username : myrto, Password: football
+ */

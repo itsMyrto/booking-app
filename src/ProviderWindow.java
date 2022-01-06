@@ -1,4 +1,3 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,7 +7,7 @@ import java.io.IOException;
 public class ProviderWindow extends JPanel {
 
     JButton addAccommodation = new JButton("Add Accommodation");
-    JButton showAccommodation = new JButton("Show All Accommodation");
+    JButton showAccommodation = new JButton("Show All Accommodations");
     JButton showProfile = new JButton("Show Profile");
     JButton showInbox = new JButton("Show Inbox");
     JButton logout = new JButton("Log out");
@@ -17,12 +16,36 @@ public class ProviderWindow extends JPanel {
     ProviderWindow(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame mainFrame){
         this.setSize(new Dimension(1500, 800));
 
+        JLabel welcomeMessage = new JLabel("Hello, "+provider.getFullName());
+        welcomeMessage.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
+        welcomeMessage.setForeground(new Color(0x06307C));
+        welcomeMessage.setBounds(270,100,300,50);
         setOpaque(false);
-        addAccommodation.setBounds(100,50,300,50);
-        showAccommodation.setBounds(100,200,300,50);
-        showProfile.setBounds(100,300,300,50);
-        showInbox.setBounds(100,350,300,50);
-        logout.setBounds(100,400,300,50);
+        addAccommodation.setBounds(200,200,250,50);
+        showAccommodation.setBounds(200,280,250,50);
+        showProfile.setBounds(200,360,250,50);
+        showInbox.setBounds(200,440,250,50);
+        logout.setBounds(200,520,250,50);
+
+        addAccommodation.setBackground(Color.WHITE);
+        addAccommodation.setForeground(new Color(0x06307C));
+        addAccommodation.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
+
+        showAccommodation.setBackground(Color.WHITE);
+        showAccommodation.setForeground(new Color(0x06307C));
+        showAccommodation.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
+
+        showProfile.setBackground(Color.WHITE);
+        showProfile.setForeground(new Color(0x06307C));
+        showProfile.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
+
+        showInbox.setBackground(Color.WHITE);
+        showInbox.setForeground(new Color(0x06307C));
+        showInbox.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
+
+        logout.setBackground(Color.WHITE);
+        logout.setForeground(new Color(0x06307C));
+        logout.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
 
         addAccommodation.setFocusable(false);
         showAccommodation.setFocusable(false);
@@ -30,20 +53,36 @@ public class ProviderWindow extends JPanel {
         showInbox.setFocusable(false);
         logout.setFocusable(false);
 
+        showInbox.addActionListener(e->{
+            mainFrame.remove(this);
+            mainFrame.removeInitialImage();
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new ShowMessages(provider, listOfAccounts, listOfAccommodations,listOfReservations,mainFrame));
+            mainFrame.getContentPane().repaint();
+        });
+
         addAccommodation.addActionListener(e -> {
-            removeAll();
-            repaint();
-            add(new AccommodationForm(provider,listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
+            mainFrame.remove(this);
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new AccommodationForm(provider,listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
+            mainFrame.getContentPane().repaint();
         });
 
         showProfile.addActionListener(e-> {
-
+            mainFrame.remove(this);
+            mainFrame.removeInitialImage();
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new UserProfileWindow(provider,listOfAccounts,listOfAccommodations,listOfReservations, mainFrame));
+            mainFrame.getContentPane().repaint();
         });
 
         showAccommodation.addActionListener(e -> {
-            removeAll();
-            repaint();
-            add(new ProviderAccommodationList(provider,listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
+            mainFrame.remove(this);
+            mainFrame.removeInitialImage();
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new ProviderAccommodationList(provider,listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
+            mainFrame.getContentPane().repaint();
+
         });
 
         logout.addActionListener(e -> {
@@ -58,11 +97,11 @@ public class ProviderWindow extends JPanel {
         add(showProfile);
         add(showInbox);
         add(logout);
+        add(welcomeMessage);
         setLayout(null);
         setVisible(true);
     }
 }
-
 /*
 changeData.add(changeAccommodation);
         changeData.add(deleteAccommodation);

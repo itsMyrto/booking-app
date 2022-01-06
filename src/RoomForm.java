@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RoomForm extends JPanel {
     public RoomForm(Accommodation accommodation,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame mainFrame){
         setSize(1500,800);
+        AtomicBoolean roomsAdded = new AtomicBoolean(false);
         JLabel filterLabel = new JLabel("Which view does the room have?");
         JLabel notice = new JLabel("Please fill the below:");
         JLabel note = new JLabel("You can add as many rooms as you want");
@@ -67,26 +69,38 @@ public class RoomForm extends JPanel {
                 priceDouble = Double.parseDouble(priceTxt);
                 capacityInt = Integer.parseInt(capacityTxt);
             } catch(Exception er){
+                error.setText("Invalid Information");
                 error.setBounds(300,550,200,30);
                 //er.printStackTrace();
                 return;
             }
             if(!(capacityTxt.isEmpty() && bedsTxt.isEmpty() && priceTxt.isEmpty())){
                 Room room = new Room(capacityInt,priceDouble,selectedView,bedsInt);
+                roomsAdded.set(true);
+                System.out.println("Room Added");
                 accommodation.addRoom(room);
-                capacity.setText("capacity");
-                price.setText("price per night");
-                beds.setText("number of beds");
+                capacity.setText("Room Capacity");
+                price.setText("Price for one Night");
+                beds.setText("Number of Beds");
             }
 
         });
 
         finish.addActionListener(e -> {
-            removeAll();
-            repaint();
+            if(!roomsAdded.get()){
+                error.setText("Please add a room");
+                error.setBounds(300,550,200,30);
+                return;
+            }
             listOfAccommodations.addNewAccommodation(accommodation);
-            add(new ProviderWindow(accommodation.getProvider(),listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
+            mainFrame.remove(this);
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new ProviderWindow(accommodation.getProvider(),listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
+            mainFrame.getContentPane().repaint();
+
+
         });
+
         add(note);
         add(error);
         add(finish);
