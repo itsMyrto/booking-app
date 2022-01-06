@@ -1,46 +1,140 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class CustomerWindow extends JPanel {
-    public CustomerWindow(Customer customer,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations){
-        setSize(1500,800);
-        JButton showProfile = new JButton("Show Profile");
-        JButton searchAccommodations = new JButton("Search");
-        JButton showReservations = new JButton("Show Reservations ");
-        JButton showInbox = new JButton("Show inbox");
-        JButton logout = new JButton("Log Out");
+    private MainFrame mainFrame;
 
-        searchAccommodations.setBounds(100,50,300,50);
-        showReservations.setBounds(100,150,300,50);
-        showProfile.setBounds(100,300,300,50);
-        showInbox.setBounds(100,350,300,50);
-        logout.setBounds(100,400,300,50);
+    private final GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    private final int PANEL_WIDTH = (int) (env.getMaximumWindowBounds().getWidth()+1) - MainFrame.FRAME_IMAGE_RESOLUTION[0];
+    private final int PANEL_HEIGHT = (int) (env.getMaximumWindowBounds().getHeight()+1);
 
-        searchAccommodations.setFocusable(false);
-        showReservations.setFocusable(false);
-        showProfile.setFocusable(false);
-        showInbox.setFocusable(false);
-        logout.setFocusable(false);
+    private JLabel welcomeUserLabel = new JLabel();
 
-        searchAccommodations.addActionListener(e -> {
-            removeAll();
-            repaint();
-            add(new SearchAndBookAccommodations(customer,listOfAccounts,listOfAccommodations,listOfReservations));
+    private JButton profileBtn = new JButton("Show Profile");
+    private JButton searchBtn = new JButton("Find hotels");
+    private JButton showReservationsBtn = new JButton("Show Reservations ");
+    private JButton inboxBtn = new JButton("Show inbox");
+    private JButton logoutBtn = new JButton("Log Out");
+
+    private final int BTN_WIDTH = 200;
+    private final int BTN_HEIGHT = 40;
+
+    private final int WELCOME_LABEL_HEIGHT = 40;
+
+    private final int MARGIN_TITLE_FROM_TOP = 80;
+    private final int MARGIN_SEARCH_BTN_FROM_TITLE = 50;
+    private final int MARGIN_BTN_FROM_FIRST_BTN = 100;
+    private final int MARGIN_BETWEEN_BTN = 20;
+
+    private final Color CUSTOMIZED_COLOR = Color.decode("#3B5998");
+
+    public CustomerWindow(Customer customer,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations, MainFrame mainFrame){
+        this.mainFrame = mainFrame;
+        this.setSize(PANEL_WIDTH,PANEL_HEIGHT);
+
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("src/magnifier.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        double logoDimensions = BTN_HEIGHT*0.75;
+        Image rescaledImg = null;
+        if (img != null) {
+            rescaledImg = img.getScaledInstance((int) logoDimensions, (int) logoDimensions, Image.SCALE_SMOOTH);
+        }
+        ImageIcon icon = new ImageIcon(rescaledImg);
+
+        int pixelCounter = MARGIN_TITLE_FROM_TOP;
+
+        welcomeUserLabel.setText("Hello, " + customer.getFullName());
+        welcomeUserLabel.setOpaque(false);
+        welcomeUserLabel.setBounds(0, MARGIN_TITLE_FROM_TOP, PANEL_WIDTH, WELCOME_LABEL_HEIGHT);
+        welcomeUserLabel.setForeground(CUSTOMIZED_COLOR);
+        welcomeUserLabel.setFont(new Font("Tahoma", Font.BOLD+Font.ITALIC, WELCOME_LABEL_HEIGHT-10));
+        welcomeUserLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        pixelCounter += WELCOME_LABEL_HEIGHT + MARGIN_SEARCH_BTN_FROM_TITLE;
+
+        searchBtn.setBackground(CUSTOMIZED_COLOR);
+        searchBtn.setForeground(Color.WHITE);
+        searchBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
+        searchBtn.setIcon(icon);
+        searchBtn.setHorizontalTextPosition(SwingConstants.LEFT);
+        searchBtn.setIconTextGap(20);
+        searchBtn.setFocusable(false);
+        searchBtn.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
+
+        pixelCounter += BTN_HEIGHT + MARGIN_BTN_FROM_FIRST_BTN;
+
+        showReservationsBtn.setBackground(Color.WHITE);
+        showReservationsBtn.setForeground(CUSTOMIZED_COLOR);
+        showReservationsBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
+        showReservationsBtn.setFocusable(false);
+        showReservationsBtn.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
+
+        pixelCounter += BTN_HEIGHT + MARGIN_BETWEEN_BTN;
+
+        profileBtn.setBackground(Color.WHITE);
+        profileBtn.setForeground(CUSTOMIZED_COLOR);
+        profileBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
+        profileBtn.setFocusable(false);
+        profileBtn.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
+
+        pixelCounter += BTN_HEIGHT + MARGIN_BETWEEN_BTN;
+
+        inboxBtn.setBackground(Color.WHITE);
+        inboxBtn.setForeground(CUSTOMIZED_COLOR);
+        inboxBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
+        inboxBtn.setFocusable(false);
+        inboxBtn.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
+
+        pixelCounter += BTN_HEIGHT + MARGIN_BETWEEN_BTN;
+
+        logoutBtn.setBackground(Color.WHITE);
+        logoutBtn.setForeground(CUSTOMIZED_COLOR);
+        logoutBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
+        logoutBtn.setFocusable(false);
+        logoutBtn.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
+
+        searchBtn.addActionListener(e -> {
+            mainFrame.remove(this);
+            mainFrame.removeInitialImage();
+            mainFrame.getContentPane().repaint();
+//            mainFrame.getContentPane().add(new SearchAndBookAccommodations(customer,listOfAccounts,listOfAccommodations,listOfReservations, mainFrame));
+            mainFrame.getContentPane().add(new FiltersPanel(mainFrame));
+            mainFrame.getContentPane().repaint();
         });
 
-        showReservations.addActionListener(e->{
-            removeAll();
-            repaint();
-            add(new ShowCustomerReservations(customer,listOfAccounts,listOfAccommodations,listOfReservations));
+        showReservationsBtn.addActionListener(e->{
+            mainFrame.remove(this);
+            mainFrame.removeInitialImage();
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new ShowCustomerReservations(customer,listOfAccounts,listOfAccommodations,listOfReservations));
+            mainFrame.getContentPane().repaint();
         });
 
-        add(logout);
-        add(showProfile);
-        add(showInbox);
-        add(showReservations);
-        add(searchAccommodations);
-        setOpaque(false);
-        setLayout(null);
-        setVisible(true);
+        logoutBtn.addActionListener(e -> {
+            mainFrame.remove(this);
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new LogInWindow(listOfAccounts,listOfAccommodations,listOfReservations, mainFrame));
+            mainFrame.getContentPane().repaint();
+        });
+
+        this.add(welcomeUserLabel);
+        this.add(logoutBtn);
+        this.add(profileBtn);
+        this.add(inboxBtn);
+        this.add(showReservationsBtn);
+        this.add(searchBtn);
+
+        this.setOpaque(false);
+        this.setLayout(null);
+        this.setVisible(true);
     }
 }
 
