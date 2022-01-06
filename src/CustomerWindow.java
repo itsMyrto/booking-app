@@ -105,8 +105,7 @@ public class CustomerWindow extends JPanel {
             mainFrame.remove(this);
             mainFrame.removeInitialImage();
             mainFrame.getContentPane().repaint();
-//            mainFrame.getContentPane().add(new SearchAndBookAccommodations(customer,listOfAccounts,listOfAccommodations,listOfReservations, mainFrame));
-            mainFrame.getContentPane().add(new FiltersPanel(mainFrame));
+            mainFrame.getContentPane().add(new SearchAndBookAccommodations(customer,listOfAccounts,listOfAccommodations,listOfReservations, mainFrame));
             mainFrame.getContentPane().repaint();
         });
 
