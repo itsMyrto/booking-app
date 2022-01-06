@@ -90,6 +90,10 @@ public class ProviderAccommodationList extends JPanel {
                     String nameOfTheAcc = table.getValueAt(rowIndex,0).toString();
                     String address = table.getValueAt(rowIndex,4).toString();
                     Accommodation selectedAccommodation = listOfAccommodations.getSpecificAccommodation(nameOfTheAcc,address);
+                    if(selectedAccommodation.getNumberOfRooms()==0){
+                        frame.dispose();
+                        return;
+                    }
                     JTextField name = new JTextField(selectedAccommodation.getName());
                     JTextField type = new JTextField(selectedAccommodation.getType());
                     JTextField capacity = new JTextField(String.valueOf(selectedAccommodation.getSpecificRoom(0).getCapacity()));
