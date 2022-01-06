@@ -69,7 +69,8 @@ public class SearchAndBookAccommodations extends JPanel {
         scrollPane.setBounds(MARGIN_BETWEEN_TABLE_AND_EDGES, MARGIN_TABLE_FROM_TOP, TABLE_WIDTH, TABLE_HEIGHT);
         scrollPane.setVisible(true);
         scrollPane.getViewport().setBackground(Color.WHITE);
-
+        table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC+Font.BOLD, 12));
+        table.getTableHeader().setBackground(new Color(182, 219, 252));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(new MouseListener() {
             @Override

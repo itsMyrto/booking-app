@@ -10,9 +10,17 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class ShowCustomerReservations extends JPanel {
-    public ShowCustomerReservations(Customer customer,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations){
+    public ShowCustomerReservations(Customer customer,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,MainFrame mainFrame){
         setSize(1500,800);
         setLayout(null);
+        JLabel label = new JLabel("MY RESERVATIONS");
+        label.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 30));
+        JLabel chooseFilter = new JLabel("Choose a filter");
+        chooseFilter.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 15));
+        chooseFilter.setForeground(new Color(6, 48, 124));
+        chooseFilter.setBounds(195,60,200,20);
+        label.setForeground(new Color(6, 48, 124));
+        label.setBounds(615,10,500,150);
         String [] tableHeaders = {"Name","Type","Country","City","Address","Room Number","Price (one night)","Capacity","View","Total Price","Dates"};
         DefaultTableModel model = new DefaultTableModel(createTable(customer,listOfReservations),tableHeaders){
             @Override
@@ -20,6 +28,7 @@ public class ShowCustomerReservations extends JPanel {
                 return false;
             }
         };
+
         JComboBox<String> filter;
         String [] availableFilter = {"All Reservations","Cancelled Reservations"};
         filter = new JComboBox<>(availableFilter) {
@@ -31,11 +40,14 @@ public class ShowCustomerReservations extends JPanel {
                     Component arrow = comps[0];
                     arrow.setSize(20, height);
                     arrow.setLocation(width - arrow.getWidth(), 0);
+                    arrow.setBackground(new Color(131, 167, 245));
                 }
             }
         };
 
-        filter.setBounds(300,5,200,30);
+        filter.setBounds(170,100,170,30);
+        filter.setFocusable(false);
+        filter.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         filter.setSelectedIndex(0);
         filter.addActionListener(new ActionListener() {
             @Override
@@ -51,6 +63,8 @@ public class ShowCustomerReservations extends JPanel {
         setOpaque(false);
         table.setFocusable(false);
         table.setRowSelectionAllowed(true);
+        table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC+Font.BOLD, 12));
+        table.getTableHeader().setBackground(new Color(182, 219, 252));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(new MouseListener() {
             @Override
@@ -111,8 +125,8 @@ public class ShowCustomerReservations extends JPanel {
                         frame.dispose();
                     });
 
-                    label.setBounds(100,100,200,200);
-                    back.setBounds(300,300,100,30);
+                    label.setBounds(300,300,600,200);
+                    back.setBounds(200,300,100,30);
                     frame.add(back);
                     frame.add(cancel);
                     frame.add(label);
@@ -138,10 +152,14 @@ public class ShowCustomerReservations extends JPanel {
             }
         });
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(50,50,1400,500);
+        scrollPane.setBounds(170,200,1200,500);
+        scrollPane.getViewport().setBackground(Color.WHITE);
+        filter.getEditor().getEditorComponent().setBackground(Color.WHITE);
         scrollPane.setVisible(true);
         add(scrollPane);
         add(filter);
+        add(chooseFilter);
+        add(label);
     }
 
     public String[][] createTable(Customer customer,ReservationsCreated listOfReservations){

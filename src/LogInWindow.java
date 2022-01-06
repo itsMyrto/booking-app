@@ -245,7 +245,7 @@ public class LogInWindow extends JPanel{
                 else if(user instanceof Provider){
                     mainFrame.remove(this);
                     mainFrame.getContentPane().repaint();
-                    mainFrame.getContentPane().add(new ProviderWindow(((Provider) user),listOfAccommodations,listOfAccounts,listOfReservations));
+                    mainFrame.getContentPane().add(new ProviderWindow(((Provider) user),listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
                     mainFrame.getContentPane().repaint();
                 }
                 else {

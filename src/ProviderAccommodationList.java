@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class ProviderAccommodationList extends JPanel {
-    ProviderAccommodationList(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations){
+    ProviderAccommodationList(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame frame){
         JButton returnButton = new JButton("Return");
         setSize(1500,800);
         setOpaque(false);
@@ -204,7 +204,7 @@ public class ProviderAccommodationList extends JPanel {
         returnButton.addActionListener(e -> {
             removeAll();
             repaint();
-            add(new ProviderWindow(provider,listOfAccommodations,listOfAccounts,listOfReservations));
+            add(new ProviderWindow(provider,listOfAccommodations,listOfAccounts,listOfReservations,frame));
         });
         add(scrollPane);
         add(returnButton);

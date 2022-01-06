@@ -1,5 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class ProviderWindow extends JPanel {
 
@@ -9,8 +13,10 @@ public class ProviderWindow extends JPanel {
     JButton showInbox = new JButton("Show Inbox");
     JButton logout = new JButton("Log out");
 
-    ProviderWindow(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations){
+
+    ProviderWindow(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame mainFrame){
         this.setSize(new Dimension(1500, 800));
+
         setOpaque(false);
         addAccommodation.setBounds(100,50,300,50);
         showAccommodation.setBounds(100,200,300,50);
@@ -27,7 +33,7 @@ public class ProviderWindow extends JPanel {
         addAccommodation.addActionListener(e -> {
             removeAll();
             repaint();
-            add(new AccommodationForm(provider,listOfAccommodations,listOfAccounts,listOfReservations));
+            add(new AccommodationForm(provider,listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
         });
 
         showProfile.addActionListener(e-> {
@@ -37,13 +43,14 @@ public class ProviderWindow extends JPanel {
         showAccommodation.addActionListener(e -> {
             removeAll();
             repaint();
-            add(new ProviderAccommodationList(provider,listOfAccommodations,listOfAccounts,listOfReservations));
+            add(new ProviderAccommodationList(provider,listOfAccommodations,listOfAccounts,listOfReservations,mainFrame));
         });
 
         logout.addActionListener(e -> {
-            removeAll();
-            repaint();
-            add(new LogInWindow(listOfAccounts,listOfAccommodations,listOfReservations));
+            mainFrame.remove(this);
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new LogInWindow(listOfAccounts,listOfAccommodations,listOfReservations, mainFrame));
+            mainFrame.getContentPane().repaint();
         });
 
         add(addAccommodation);
