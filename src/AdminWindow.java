@@ -2,60 +2,87 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AdminWindow extends JPanel {
+
+    private final GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    private final int PANEL_WIDTH = (int) (env.getMaximumWindowBounds().getWidth() - MainFrame.FRAME_IMAGE_RESOLUTION[0]);
+    private final int PANEL_HEIGHT = (int) (env.getMaximumWindowBounds().getHeight());
+
+    private JLabel welcomeMessage = new JLabel();
+
+    JButton tracking = new JButton("Track other Users");
+    JButton approveUser = new JButton("Approve Users");
+    JButton showProfile = new JButton("Show Profile");
+    JButton showInbox = new JButton("Send messages/Show Inbox");
+    JButton logout = new JButton("Log out");
+
+    private final int TITLE_HEIGHT = 40;
+
+    private final int BTN_WIDTH = 250;
+    private final int BTN_HEIGHT = 40;
+
+    private final int MARGIN_BTN_FROM_EDGES = (PANEL_WIDTH-BTN_WIDTH)/2;
+    private final int MARGIN_TITLE_FROM_TOP = 80;
+    private final int MARGIN_BETWEEN_BTN = 50;
+    private final int MARGIN_BTN_FROM_TITLE = 70;
+
+    private final String FONT = "Tahoma";
+    private final Color CUSTOMIZED_COLOR = Color.decode("#3B5998");
+
     public AdminWindow(Admin admin,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,MainFrame mainFrame){
-        setOpaque(false);
-        setLayout(null);
-        setVisible(true);
-        setBackground(Color.white);
-        setSize(1500,800);
-        JButton tracking = new JButton("Track other Users");
-        JButton approveUser = new JButton("Approve Users");
-        JButton showProfile = new JButton("Show Profile");
-        JButton showInbox = new JButton("Send messages/Show Inbox");
-        JButton logout = new JButton("Log out");
+        this.setSize(1500,800);
 
-        tracking.setBounds(100,50,200,30);
-        showProfile.setBounds(100,100,200,30);
-        showInbox.setBounds(100,170,200,30);
-        logout.setBounds(100,250,200,30);
+        int pxCounter = MARGIN_TITLE_FROM_TOP;
 
-        JLabel welcomeMessage = new JLabel("Hello, "+admin.getFullName());
-        welcomeMessage.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,26));
-        welcomeMessage.setForeground(new Color(0x06307C));
-        welcomeMessage.setBounds(200,100,400,50);
-        setOpaque(false);
-        add(welcomeMessage);
+        welcomeMessage.setText("Hello, " + admin.getFullName());
+        welcomeMessage.setFont(new Font(FONT,Font.ITALIC+Font.BOLD,TITLE_HEIGHT-10));
+        welcomeMessage.setForeground(CUSTOMIZED_COLOR);
+        welcomeMessage.setBounds(0, pxCounter, PANEL_WIDTH, TITLE_HEIGHT);
+        welcomeMessage.setHorizontalAlignment(SwingConstants.CENTER);
+        welcomeMessage.setOpaque(false);
 
-        tracking.setBounds(200,260,250,50);
-        showProfile.setBounds(200,340,250,50);
-        showInbox.setBounds(200,420,250,50);
-        logout.setBounds(200,500,250,50);
-        approveUser.setBounds(200,180,250,50);
+        pxCounter += TITLE_HEIGHT + MARGIN_BTN_FROM_TITLE;
+
+        approveUser.setBounds(MARGIN_BTN_FROM_EDGES, pxCounter, BTN_WIDTH, BTN_HEIGHT);
+
+        pxCounter += BTN_HEIGHT + MARGIN_BETWEEN_BTN;
+
+        tracking.setBounds(MARGIN_BTN_FROM_EDGES, pxCounter, BTN_WIDTH, BTN_HEIGHT);
+
+        pxCounter += BTN_HEIGHT + MARGIN_BETWEEN_BTN;
+
+        showProfile.setBounds(MARGIN_BTN_FROM_EDGES, pxCounter, BTN_WIDTH, BTN_HEIGHT);
+
+        pxCounter += BTN_HEIGHT + MARGIN_BETWEEN_BTN;
+
+        showInbox.setBounds(MARGIN_BTN_FROM_EDGES, pxCounter, BTN_WIDTH, BTN_HEIGHT);
+
+        pxCounter += BTN_HEIGHT + MARGIN_BETWEEN_BTN;
+
+        logout.setBounds(MARGIN_BTN_FROM_EDGES, pxCounter, BTN_WIDTH, BTN_HEIGHT);
 
         approveUser.setBackground(Color.WHITE);
-        approveUser.setForeground(new Color(0x06307C));
-        approveUser.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
+        approveUser.setForeground(CUSTOMIZED_COLOR);
+        approveUser.setFont(new Font(FONT,Font.BOLD,16));
+        approveUser.setFocusable(false);
 
         tracking.setBackground(Color.WHITE);
-        tracking.setForeground(new Color(0x06307C));
-        tracking.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
+        tracking.setForeground(CUSTOMIZED_COLOR);
+        tracking.setFont(new Font(FONT,Font.BOLD,16));
+        tracking.setFocusable(false);
 
         showProfile.setBackground(Color.WHITE);
-        showProfile.setForeground(new Color(0x06307C));
-        showProfile.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
+        showProfile.setForeground(CUSTOMIZED_COLOR);
+        showProfile.setFont(new Font(FONT,Font.BOLD,16));
+        showProfile.setFocusable(false);
 
         showInbox.setBackground(Color.WHITE);
-        showInbox.setForeground(new Color(0x06307C));
-        showInbox.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
+        showInbox.setForeground(CUSTOMIZED_COLOR);
+        showInbox.setFont(new Font(FONT,Font.BOLD,16));
+        showInbox.setFocusable(false);
 
         logout.setBackground(Color.WHITE);
-        logout.setForeground(new Color(0x06307C));
-        logout.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
-
-        approveUser.setFocusable(false);
-        tracking.setFocusable(false);
-        showProfile.setFocusable(false);
-        showInbox.setFocusable(false);
+        logout.setForeground(CUSTOMIZED_COLOR);
+        logout.setFont(new Font(FONT,Font.BOLD,16));
         logout.setFocusable(false);
 
         tracking.addActionListener(e -> {
@@ -90,10 +117,15 @@ public class AdminWindow extends JPanel {
             mainFrame.getContentPane().repaint();
         });
 
-        add(approveUser);
-        add(tracking);
-        add(showProfile);
-        add(showInbox);
-        add(logout);
+        this.add(welcomeMessage);
+        this.add(approveUser);
+        this.add(tracking);
+        this.add(showProfile);
+        this.add(showInbox);
+        this.add(logout);
+
+        this.setOpaque(false);
+        this.setLayout(null);
+        this.setVisible(true);
     }
 }

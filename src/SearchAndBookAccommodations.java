@@ -338,6 +338,7 @@ class FiltersPanel extends JPanel{
     private final int MARGIN_BETWEEN_CHECKBOXES = 20;
     private final int MARGIN_BTN_FROM_CHECKBOXES = 60;
 
+    private final String FONT = "Tahoma";
     private final Color CUSTOMIZED_COLOR = Color.decode("#3B5998");
 
     public FiltersPanel(MainFrame mainFrame){
@@ -349,7 +350,7 @@ class FiltersPanel extends JPanel{
         title.setBounds(0, pixelCounter, PANEL_WIDTH, TITLE_HEIGHT);
         title.setForeground(CUSTOMIZED_COLOR);
         title.setFocusable(false);
-        title.setFont(new Font("Tahoma", Font.BOLD+Font.ITALIC, TITLE_HEIGHT-10));
+        title.setFont(new Font(FONT, Font.BOLD+Font.ITALIC, TITLE_HEIGHT-10));
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
         pixelCounter += TITLE_HEIGHT + MARGIN_FIELDS_FROM_TITLE;
@@ -376,7 +377,7 @@ class FiltersPanel extends JPanel{
         people.setPaintTrack(true);
         people.setMinorTickSpacing(1);
         people.setMajorTickSpacing(4);
-        people.setFont(new Font("Tahoma", Font.BOLD, 16));
+        people.setFont(new Font(FONT, Font.BOLD, 16));
         people.setForeground(CUSTOMIZED_COLOR);
         people.setBounds((PANEL_WIDTH-SLIDERS_WIDTH)/2, pixelCounter, SLIDERS_WIDTH, SLIDERS_HEIGHT);
         people.setFocusable(false);
@@ -385,7 +386,7 @@ class FiltersPanel extends JPanel{
         pixelCounter += SLIDERS_HEIGHT + MARGIN_BETWEEN_SLIDERS;
 
         price.setOpaque(false);
-        price.setFont(new Font("Tahoma", Font.BOLD, 16));
+        price.setFont(new Font(FONT, Font.BOLD, 16));
         price.setForeground(CUSTOMIZED_COLOR);
         price.setBounds((PANEL_WIDTH-SLIDERS_WIDTH)/2, pixelCounter, SLIDERS_WIDTH, SLIDERS_HEIGHT);
         price.setPaintLabels(true);
@@ -403,7 +404,7 @@ class FiltersPanel extends JPanel{
         pool.setForeground(CUSTOMIZED_COLOR);
         pool.setOpaque(false);
         pool.setFocusable(false);
-        pool.setFont(new Font("Tahoma", Font.BOLD, 16));
+        pool.setFont(new Font(FONT, Font.BOLD, 16));
         pool.setAlignmentX(CENTER_ALIGNMENT);
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BETWEEN_CHECKBOXES;
@@ -413,7 +414,7 @@ class FiltersPanel extends JPanel{
         restaurant.setForeground(CUSTOMIZED_COLOR);
         restaurant.setOpaque(false);
         restaurant.setFocusable(false);
-        restaurant.setFont(new Font("Tahoma", Font.BOLD, 16));
+        restaurant.setFont(new Font(FONT, Font.BOLD, 16));
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BETWEEN_CHECKBOXES;
 
@@ -422,7 +423,7 @@ class FiltersPanel extends JPanel{
         wifi.setForeground(CUSTOMIZED_COLOR);
         wifi.setOpaque(false);
         wifi.setFocusable(false);
-        wifi.setFont(new Font("Tahoma", Font.BOLD, 16));
+        wifi.setFont(new Font(FONT, Font.BOLD, 16));
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BETWEEN_CHECKBOXES;
 
@@ -431,7 +432,7 @@ class FiltersPanel extends JPanel{
         parking.setForeground(CUSTOMIZED_COLOR);
         parking.setOpaque(false);
         parking.setFocusable(false);
-        parking.setFont(new Font("Tahoma", Font.BOLD, 16));
+        parking.setFont(new Font(FONT, Font.BOLD, 16));
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BETWEEN_CHECKBOXES;
 
@@ -440,20 +441,20 @@ class FiltersPanel extends JPanel{
         pets.setForeground(CUSTOMIZED_COLOR);
         pets.setFocusable(false);
         pets.setOpaque(false);
-        pets.setFont(new Font("Tahoma", Font.BOLD, 16));
+        pets.setFont(new Font(FONT, Font.BOLD, 16));
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BTN_FROM_CHECKBOXES;
 
         applyFilters.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
         applyFilters.setFocusable(false);
         applyFilters.setForeground(Color.WHITE);
-        applyFilters.setFont(new Font("Tahoma", Font.BOLD, 16));
+        applyFilters.setFont(new Font(FONT, Font.BOLD, 16));
         applyFilters.setBackground(CUSTOMIZED_COLOR);
 
         pixelCounter -= MARGIN_BTN_FROM_CHECKBOXES/2;
 
         invalidDates.setForeground(Color.RED);
-        invalidDates.setFont(new Font("Tahoma", Font.BOLD, 16));
+        invalidDates.setFont(new Font(FONT, Font.BOLD, 16));
         invalidDates.setBounds(0, pixelCounter, PANEL_WIDTH, CHECKBOXES_HEIGHT);
         invalidDates.setOpaque(false);
         invalidDates.setHorizontalAlignment(SwingConstants.CENTER);
