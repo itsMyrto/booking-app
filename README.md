@@ -1,9 +1,2 @@
 # MyBooking
-MainFrame
-LoginWindow
-RegisterWindow
-ProviderWindow
-RoomForm
-AccommodationForm
-SearchAndBookAccommodations
-
+A booking app written in Java and Swing
