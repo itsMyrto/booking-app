@@ -309,6 +309,11 @@ public class Date implements Serializable {
 
     }
 
+    /**
+     * This method checks if two arriving dates arethe same
+     * @param date
+     * @return
+     */
     public boolean equalDates(Date date){
         return date.getStartDay() == this.startDay && date.getStartMonth()== this.startMonth && date.getStartYear() == this.startYear;
     }

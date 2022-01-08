@@ -44,10 +44,17 @@ public class Room implements Serializable
         return view;
     }
 
+    /**
+     * @return The total number of beds of the room. For example if the capacity of the room is 2 it could have
+     * 2 single beds or one double bed.
+     */
     public int getTotalBeds(){
         return totalBeds;
     }
 
+    /**
+     * @return The price of the room for one night
+     */
     public double getPricePerNight()
     { 
         return pricePerNight; 
@@ -192,6 +199,10 @@ public class Room implements Serializable
          reservedDates.remove(date);
     }
 
+    /**
+     * This method changes the number of beds of a room
+     * @param number The new number of beds
+     */
     public void setTotalBeds(int number){
         this.totalBeds = number;
     }

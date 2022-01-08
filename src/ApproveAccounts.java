@@ -7,9 +7,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * This class contains the panel that is shown when an admin wants to approve new users.
+ * For each user there are two option : approve or disapprove.
+ * After an account gets approved/disapproved, a new account shows up until the list with unapproved accounts gets empty.
+ */
 public class ApproveAccounts extends JPanel {
 
-
+    /**
+     * @param admin This is the admin that is logged in the app
+     * @param listOfAccounts The list of total accounts
+     * @param listOfAccommodations The list of total Accommodations
+     * @param listOfReservations The list of total Reservations
+     * @param mainFrame The frame of the app
+     */
     public ApproveAccounts(Admin admin,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,MainFrame mainFrame){
         AtomicInteger i= new AtomicInteger();
         setSize(1000,800);
@@ -31,10 +42,26 @@ public class ApproveAccounts extends JPanel {
         error.setVisible(false);
         add(error);
 
+        JButton returnButton = new JButton("Return");
+        returnButton.setBounds(10,10,50,20);
+        returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        returnButton.setForeground(new Color(191, 0, 255));
+        returnButton.setBackground(Color.white);
+        returnButton.setFocusable(false);
+        returnButton.setBorder(null);
+        add(returnButton);
+        returnButton.addActionListener(e -> {
+            mainFrame.remove(this);
+            mainFrame.getContentPane().repaint();
+            mainFrame.addInitialImage();
+            mainFrame.getContentPane().add(new AdminWindow(admin, listOfAccounts, listOfAccommodations,listOfReservations,mainFrame));
+            mainFrame.getContentPane().repaint();
+        });
+
         JLabel empty = new JLabel("The List is empty");
-        empty.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,18));
+        empty.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,24));
         empty.setForeground(new Color(0x06307C));
-        empty.setBounds(600,300,400,30);
+        empty.setBounds(610,300,400,30);
         empty.setVisible(false);
         add(empty);
 
@@ -89,7 +116,7 @@ public class ApproveAccounts extends JPanel {
         else{
             acc.setText("Type: "+unapprovedAccounts.get(0).getTypeOfUser());
             email.setText("Email: "+unapprovedAccounts.get(0).getEmail());
-            fullName.setText("Full Name: "+unapprovedAccounts.get(0).getEmail());
+            fullName.setText("Full Name: "+unapprovedAccounts.get(0).getFullName());
             username.setText("Username: "+unapprovedAccounts.get(0).getUsername());
             empty.setVisible(false);
             approve.setVisible(true);
@@ -112,7 +139,7 @@ public class ApproveAccounts extends JPanel {
                     if(result+1<unapprovedAccounts.size()){
                         acc.setText("Type: "+unapprovedAccounts.get(result+1).getTypeOfUser());
                         email.setText("Email: "+unapprovedAccounts.get(result+1).getEmail());
-                        fullName.setText("Full Name: "+unapprovedAccounts.get(result+1).getEmail());
+                        fullName.setText("Full Name: "+unapprovedAccounts.get(result+1).getFullName());
                         username.setText("Username: "+unapprovedAccounts.get(result+1).getUsername());
                     }
                     else{
@@ -141,7 +168,7 @@ public class ApproveAccounts extends JPanel {
                     if(result+1<unapprovedAccounts.size()){
                         acc.setText("Type: "+unapprovedAccounts.get(result+1).getTypeOfUser());
                         email.setText("Email: "+unapprovedAccounts.get(result+1).getEmail());
-                        fullName.setText("Full Name: "+unapprovedAccounts.get(result+1).getEmail());
+                        fullName.setText("Full Name: "+unapprovedAccounts.get(result+1).getFullName());
                         username.setText("Username: "+unapprovedAccounts.get(result+1).getUsername());
                     }
                     else{
@@ -154,12 +181,9 @@ public class ApproveAccounts extends JPanel {
                 }
                 i.getAndIncrement();
 
-
             });
 
-
         }
-
 
         setLayout(null);
     }

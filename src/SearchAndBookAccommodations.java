@@ -17,7 +17,6 @@ import java.util.Locale;
 public class SearchAndBookAccommodations extends JPanel {
 
     private FiltersPanel filtersPanel ;
-
     private final GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
     private final int PANEL_WIDTH = (int) (env.getMaximumWindowBounds().getWidth() * 0.8);
     private final int PANEL_HEIGHT = (int) env.getMaximumWindowBounds().getHeight();
@@ -49,6 +48,23 @@ public class SearchAndBookAccommodations extends JPanel {
             }
         };
 
+        JButton returnButton = new JButton("Return");
+        returnButton.setBounds(10,10,50,20);
+        returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        returnButton.setForeground(new Color(191, 0, 255));
+        returnButton.setBackground(Color.white);
+        returnButton.setFocusable(false);
+        returnButton.setBorder(null);
+        add(returnButton);
+        returnButton.addActionListener(e -> {
+            mainFrame.remove(this);
+            mainFrame.remove(filtersPanel);
+            mainFrame.getContentPane().repaint();
+            mainFrame.addInitialImage();
+            mainFrame.getContentPane().add(new CustomerWindow(customer, listOfAccounts, listOfAccommodations,listOfReservations,mainFrame));
+            mainFrame.getContentPane().repaint();
+        });
+
         JTable table = new JTable(model);
         table.setOpaque(false);
         table.setFocusable(false);
@@ -64,10 +80,10 @@ public class SearchAndBookAccommodations extends JPanel {
         for(int i=0; i<table.getColumnCount(); i++){
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
-        JLabel label2 = new JLabel("Please fill the form if you want to book an accommodation");
+        JLabel label2 = new JLabel("Add destination & dates,click the apply button, and then click on your preferred accommodation to see an image or to make a reservation");
         label2.setFont(new Font("sans serif",Font.BOLD+Font.ITALIC,14));
         label2.setForeground(Color.red);
-        label2.setBounds(380,50,400,20);
+        label2.setBounds(180,50,1000,20);
         add(label2);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(MARGIN_BETWEEN_TABLE_AND_EDGES, MARGIN_TABLE_FROM_TOP, TABLE_WIDTH, TABLE_HEIGHT);
@@ -110,35 +126,37 @@ public class SearchAndBookAccommodations extends JPanel {
 
                 if(rowIndex != -1){
                     JFrame frame = new JFrame("Make a reservation");
-                    frame.setSize(500,500);
+                    frame.setSize(1000,800);
                     frame.setResizable(false);
                     frame.getContentPane().setBackground(Color.white);
                     frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                    String[] options = {"Yes","No"};
-                    JLabel label = new JLabel("Are you sure you want to book this?");
-                    label.setBounds(90,50,400,30);
-                    label.setForeground(new Color(0x06307C));
-                    label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,18));
-                    JButton yes = new JButton("Yes");
+                    JButton yes = new JButton("Reserve");
                     yes.setBackground(new Color(0x06307C));
                     yes.setForeground(Color.WHITE);
-                    JButton no = new JButton("No");
+                    JButton no = new JButton("Return");
                     no.setBackground(new Color(0x06307C));
                     no.setForeground(Color.WHITE);
                     yes.setFocusable(false);
                     no.setFocusable(false);
-                    yes.setBounds(100,300,100,30);
-                    no.setBounds(300,300,100,30);
-                    frame.add(label);
+                    yes.setBounds(250,650,200,40);
+                    no.setBounds(500,650,200,40);
                     frame.add(yes);
                     frame.add(no);
+                    String accommodationName = table.getValueAt(rowIndex,0).toString();
+                    String location = table.getValueAt(rowIndex,4).toString();
+                    String roomNumberTxt = table.getValueAt(rowIndex,5).toString();
+                    Accommodation accommodation = listOfAccommodations.getSpecificAccommodation(accommodationName,location);
+                    JLabel label = new JLabel(accommodation.getName()+" "+accommodation.getType()+", Location: "+accommodation.getLocation().getCountry()+","+accommodation.getLocation().getTown()+" "+accommodation.getLocation().getStreet()+" "+accommodation.getLocation().getStreetNumber());
+                    label.setBounds(220,100,900,30);
+                    label.setForeground(new Color(0x06307C));
+                    label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,16));
+                    frame.add(label);
+                    JLabel accImage = accommodation.getImage();
+                    accImage.setBounds(180,150,600,450);
+                    frame.add(accImage);
                     yes.addActionListener(e1 -> {
-                        String accommodationName = table.getValueAt(rowIndex,0).toString();
-                        String location = table.getValueAt(rowIndex,4).toString();
-                        String roomNumberTxt = table.getValueAt(rowIndex,5).toString();
                         int roomNumber = Integer.parseInt(roomNumberTxt);
                         roomNumber--;
-                        Accommodation accommodation = listOfAccommodations.getSpecificAccommodation(accommodationName,location);
                         if(accommodation != null){
                             System.out.println(accommodation.getNumberOfRooms()+" "+roomNumber);
                             Reservation reservation = new Reservation(accommodation,customer,dateOption,roomNumber);
@@ -198,8 +216,12 @@ public class SearchAndBookAccommodations extends JPanel {
                     return;
                 }
                 Date dateOption = new Date(arrivingDay,arrivingMonth,arrivingYear,leavingDay,leavingMonth,leavingYear);
-                if(!dateOption.checkingTheDates()) filtersPanel.invalidDates.setVisible(true);
-
+                if(!dateOption.checkingTheDates()) {
+                    filtersPanel.invalidDates.setVisible(true);
+                    model.setRowCount(0);
+                    return;
+                }
+                filtersPanel.invalidDates.setVisible(false);
                 int maxPrice = filtersPanel.price.getValue();
                 int capacity = filtersPanel.people.getValue();
                 String countryTxt = filtersPanel.country.getText().toUpperCase(Locale.ROOT);
@@ -338,7 +360,6 @@ class FiltersPanel extends JPanel{
     private final int MARGIN_BETWEEN_CHECKBOXES = 20;
     private final int MARGIN_BTN_FROM_CHECKBOXES = 60;
 
-    private final String FONT = "Tahoma";
     private final Color CUSTOMIZED_COLOR = Color.decode("#3B5998");
 
     public FiltersPanel(MainFrame mainFrame){
@@ -350,7 +371,7 @@ class FiltersPanel extends JPanel{
         title.setBounds(0, pixelCounter, PANEL_WIDTH, TITLE_HEIGHT);
         title.setForeground(CUSTOMIZED_COLOR);
         title.setFocusable(false);
-        title.setFont(new Font(FONT, Font.BOLD+Font.ITALIC, TITLE_HEIGHT-10));
+        title.setFont(new Font("Tahoma", Font.BOLD+Font.ITALIC, TITLE_HEIGHT-10));
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
         pixelCounter += TITLE_HEIGHT + MARGIN_FIELDS_FROM_TITLE;
@@ -377,7 +398,7 @@ class FiltersPanel extends JPanel{
         people.setPaintTrack(true);
         people.setMinorTickSpacing(1);
         people.setMajorTickSpacing(4);
-        people.setFont(new Font(FONT, Font.BOLD, 16));
+        people.setFont(new Font("Tahoma", Font.BOLD, 16));
         people.setForeground(CUSTOMIZED_COLOR);
         people.setBounds((PANEL_WIDTH-SLIDERS_WIDTH)/2, pixelCounter, SLIDERS_WIDTH, SLIDERS_HEIGHT);
         people.setFocusable(false);
@@ -386,7 +407,7 @@ class FiltersPanel extends JPanel{
         pixelCounter += SLIDERS_HEIGHT + MARGIN_BETWEEN_SLIDERS;
 
         price.setOpaque(false);
-        price.setFont(new Font(FONT, Font.BOLD, 16));
+        price.setFont(new Font("Tahoma", Font.BOLD, 16));
         price.setForeground(CUSTOMIZED_COLOR);
         price.setBounds((PANEL_WIDTH-SLIDERS_WIDTH)/2, pixelCounter, SLIDERS_WIDTH, SLIDERS_HEIGHT);
         price.setPaintLabels(true);
@@ -404,7 +425,7 @@ class FiltersPanel extends JPanel{
         pool.setForeground(CUSTOMIZED_COLOR);
         pool.setOpaque(false);
         pool.setFocusable(false);
-        pool.setFont(new Font(FONT, Font.BOLD, 16));
+        pool.setFont(new Font("Tahoma", Font.BOLD, 16));
         pool.setAlignmentX(CENTER_ALIGNMENT);
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BETWEEN_CHECKBOXES;
@@ -414,7 +435,7 @@ class FiltersPanel extends JPanel{
         restaurant.setForeground(CUSTOMIZED_COLOR);
         restaurant.setOpaque(false);
         restaurant.setFocusable(false);
-        restaurant.setFont(new Font(FONT, Font.BOLD, 16));
+        restaurant.setFont(new Font("Tahoma", Font.BOLD, 16));
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BETWEEN_CHECKBOXES;
 
@@ -423,7 +444,7 @@ class FiltersPanel extends JPanel{
         wifi.setForeground(CUSTOMIZED_COLOR);
         wifi.setOpaque(false);
         wifi.setFocusable(false);
-        wifi.setFont(new Font(FONT, Font.BOLD, 16));
+        wifi.setFont(new Font("Tahoma", Font.BOLD, 16));
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BETWEEN_CHECKBOXES;
 
@@ -432,7 +453,7 @@ class FiltersPanel extends JPanel{
         parking.setForeground(CUSTOMIZED_COLOR);
         parking.setOpaque(false);
         parking.setFocusable(false);
-        parking.setFont(new Font(FONT, Font.BOLD, 16));
+        parking.setFont(new Font("Tahoma", Font.BOLD, 16));
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BETWEEN_CHECKBOXES;
 
@@ -441,20 +462,20 @@ class FiltersPanel extends JPanel{
         pets.setForeground(CUSTOMIZED_COLOR);
         pets.setFocusable(false);
         pets.setOpaque(false);
-        pets.setFont(new Font(FONT, Font.BOLD, 16));
+        pets.setFont(new Font("Tahoma", Font.BOLD, 16));
 
         pixelCounter += CHECKBOXES_HEIGHT + MARGIN_BTN_FROM_CHECKBOXES;
 
         applyFilters.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
         applyFilters.setFocusable(false);
         applyFilters.setForeground(Color.WHITE);
-        applyFilters.setFont(new Font(FONT, Font.BOLD, 16));
+        applyFilters.setFont(new Font("Tahoma", Font.BOLD, 16));
         applyFilters.setBackground(CUSTOMIZED_COLOR);
 
         pixelCounter -= MARGIN_BTN_FROM_CHECKBOXES/2;
 
         invalidDates.setForeground(Color.RED);
-        invalidDates.setFont(new Font(FONT, Font.BOLD, 16));
+        invalidDates.setFont(new Font("Tahoma", Font.BOLD, 16));
         invalidDates.setBounds(0, pixelCounter, PANEL_WIDTH, CHECKBOXES_HEIGHT);
         invalidDates.setOpaque(false);
         invalidDates.setHorizontalAlignment(SwingConstants.CENTER);

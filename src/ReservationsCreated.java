@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * This class has the reservations, the names of the costumers and their emails of the whole app. 
+ * This class keeps and saves the reservations in the app.
  */
 public class ReservationsCreated {
 
@@ -116,7 +116,7 @@ public class ReservationsCreated {
     public int getTheNumberOfReservationsOfAnAccommodation(Accommodation accommodation){
         int total = 0;
         for(Reservation x:reservations){
-            if(x.getAccommodation().getProvider().getEmail().equals(accommodation.getProvider().getEmail()) && !x.getCancelled()){
+            if(x.getAccommodation().getName().equals(accommodation.getName()) && x.getAccommodation().getProvider().getEmail().equals(accommodation.getProvider().getEmail()) && !x.getCancelled()){
                 total++;
             }
         }

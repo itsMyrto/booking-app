@@ -139,3 +139,15 @@ public class ProviderWindow extends JPanel {
         this.setVisible(true);
     }
 }
+/*
+changeData.add(changeAccommodation);
+        changeData.add(deleteAccommodation);
+        showData.add(showAllAccommodations);
+        showData.add(showReservedAccommodations);
+        profileMenu.add(addAccommodation);
+        profileMenu.add(changeData);
+        profileMenu.add(showData);
+        profileMenu.add(showProfile);
+        profileMenu.add(showInbox);
+        profileMenu.add(logout);
+ */

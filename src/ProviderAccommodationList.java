@@ -14,6 +14,12 @@ import java.util.Locale;
 public class ProviderAccommodationList extends JPanel {
     ProviderAccommodationList(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame mainFrame){
         JButton returnButton = new JButton("Return");
+        returnButton.setBounds(10,10,50,20);
+        returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        returnButton.setForeground(new Color(191, 0, 255));
+        returnButton.setBackground(Color.white);
+        returnButton.setFocusable(false);
+        returnButton.setBorder(null);
         JLabel label2 = new JLabel("Click to an accommodation to make changes");
         label2.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
         label2.setForeground(Color.red);
@@ -87,7 +93,6 @@ public class ProviderAccommodationList extends JPanel {
         scrollPane.setVisible(true);
         scrollPane.getViewport().setBackground(new Color(0xFFFFFF));
         scrollPane.setBounds(200,200,1200,300);
-        returnButton.setBounds(0,0,80,30);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(new MouseListener() {
             @Override

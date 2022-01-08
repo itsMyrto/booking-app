@@ -30,7 +30,6 @@ public class CustomerWindow extends JPanel {
     private final int MARGIN_BTN_FROM_FIRST_BTN = 100;
     private final int MARGIN_BETWEEN_BTN = 20;
 
-    private final String FONT = "Tahoma";
     private final Color CUSTOMIZED_COLOR = Color.decode("#3B5998");
 
     public CustomerWindow(Customer customer,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations, MainFrame mainFrame){
@@ -56,14 +55,14 @@ public class CustomerWindow extends JPanel {
         welcomeUserLabel.setOpaque(false);
         welcomeUserLabel.setBounds(0, MARGIN_TITLE_FROM_TOP, PANEL_WIDTH, WELCOME_LABEL_HEIGHT);
         welcomeUserLabel.setForeground(CUSTOMIZED_COLOR);
-        welcomeUserLabel.setFont(new Font(FONT, Font.BOLD+Font.ITALIC, WELCOME_LABEL_HEIGHT-10));
+        welcomeUserLabel.setFont(new Font("Tahoma", Font.BOLD+Font.ITALIC, WELCOME_LABEL_HEIGHT-10));
         welcomeUserLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         pixelCounter += WELCOME_LABEL_HEIGHT + MARGIN_SEARCH_BTN_FROM_TITLE;
 
         searchBtn.setBackground(CUSTOMIZED_COLOR);
         searchBtn.setForeground(Color.WHITE);
-        searchBtn.setFont(new Font(FONT, Font.BOLD, 16));
+        searchBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
         searchBtn.setIcon(icon);
         searchBtn.setHorizontalTextPosition(SwingConstants.LEFT);
         searchBtn.setIconTextGap(20);
@@ -74,7 +73,7 @@ public class CustomerWindow extends JPanel {
 
         showReservationsBtn.setBackground(Color.WHITE);
         showReservationsBtn.setForeground(CUSTOMIZED_COLOR);
-        showReservationsBtn.setFont(new Font(FONT, Font.BOLD, 16));
+        showReservationsBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
         showReservationsBtn.setFocusable(false);
         showReservationsBtn.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
 
@@ -82,7 +81,7 @@ public class CustomerWindow extends JPanel {
 
         profileBtn.setBackground(Color.WHITE);
         profileBtn.setForeground(CUSTOMIZED_COLOR);
-        profileBtn.setFont(new Font(FONT, Font.BOLD, 16));
+        profileBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
         profileBtn.setFocusable(false);
         profileBtn.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
 
@@ -90,7 +89,7 @@ public class CustomerWindow extends JPanel {
 
         inboxBtn.setBackground(Color.WHITE);
         inboxBtn.setForeground(CUSTOMIZED_COLOR);
-        inboxBtn.setFont(new Font(FONT, Font.BOLD, 16));
+        inboxBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
         inboxBtn.setFocusable(false);
         inboxBtn.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
 
@@ -98,7 +97,7 @@ public class CustomerWindow extends JPanel {
 
         logoutBtn.setBackground(Color.WHITE);
         logoutBtn.setForeground(CUSTOMIZED_COLOR);
-        logoutBtn.setFont(new Font(FONT, Font.BOLD, 16));
+        logoutBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
         logoutBtn.setFocusable(false);
         logoutBtn.setBounds((PANEL_WIDTH-BTN_WIDTH)/2, pixelCounter, BTN_WIDTH, BTN_HEIGHT);
 

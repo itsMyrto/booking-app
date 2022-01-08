@@ -63,21 +63,11 @@ public class User implements Serializable {
         inbox.add(message);
     }
 
+    /**
+     * @return The message list of the user
+     */
     public ArrayList<Message> getMessages(){
         return inbox;
-    }
-    /**
-     * This method prints all the messages that a user received
-     * and for each message it prints the name & the email of the sender
-     */
-    public void printMessages(){
-        int count = 0;
-        for(Message x:inbox){
-            System.out.println(++count+".)Message:"+x.getMessage()+"----->Sender:"+x.getSender().getFullName()+",Email:"+x.getSender().getEmail());
-        }
-        if(inbox.isEmpty()){
-            System.out.println("Your inbox is empty");
-        }
     }
 
     /**

@@ -1,13 +1,7 @@
 import java.io.*;
 
-/**
- * This class contains the main method of the project
- */
 public class Main {
-	/**
-	 * This is the main method. It repetitively shows the main menu of the app, and it stops when the user chooses the exit option
-	 * @param args arguments
-	 */
+
 	public static void main(String[] args) throws FileNotFoundException {
 		AccountsCreated listOfAccounts = new AccountsCreated();
 		AccommodationsCreated listOfAccommodations = new AccommodationsCreated();
@@ -19,7 +13,19 @@ public class Main {
 
 /*
 Admins:
--> Username : gregtsoum , Password:123
--> Username : gmeditsk , Password: 456
--> Username : myrto, Password: football
+-> Username : gregtsoum , Password : 123
+-> Username : gmeditsk , Password : 456
+-> Username : myrto, Password : football
+
+Customers:
+-> Username : bastilleDan , Password : pompeii
+-> Username : antogrizi , Password : grizou
+-> Username : keramidas , Password : thinksilicon
+-> Username : robinSchulz , Password : 000
+
+Providers :
+-> Username : kygo , Password : music
+-> Username : RickAndMorty , Password : 123
+-> Username : lioMessi , Password : lio10
+
  */

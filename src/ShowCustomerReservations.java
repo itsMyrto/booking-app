@@ -13,6 +13,23 @@ public class ShowCustomerReservations extends JPanel {
     public ShowCustomerReservations(Customer customer,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,MainFrame mainFrame){
         setSize(1500,800);
         setLayout(null);
+
+        JButton returnButton = new JButton("Return");
+        returnButton.setBounds(10,10,50,20);
+        returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        returnButton.setForeground(new Color(191, 0, 255));
+        returnButton.setBackground(Color.white);
+        returnButton.setFocusable(false);
+        returnButton.setBorder(null);
+        add(returnButton);
+        returnButton.addActionListener(e -> {
+            mainFrame.remove(this);
+            mainFrame.getContentPane().repaint();
+            mainFrame.addInitialImage();
+            mainFrame.getContentPane().add(new CustomerWindow(customer, listOfAccounts, listOfAccommodations,listOfReservations,mainFrame));
+            mainFrame.getContentPane().repaint();
+        });
+
         JLabel label = new JLabel("MY RESERVATIONS");
         label.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 30));
         JLabel chooseFilter = new JLabel("Choose a filter");
@@ -144,11 +161,11 @@ public class ShowCustomerReservations extends JPanel {
                             if(year < dateNow.getYear() || year == dateNow.getYear() && month < dateNow.getMonthValue() || (year == dateNow.getYear() && month == dateNow.getMonthValue() && day<dateNow.getDayOfMonth())){
                                 error.setBounds(100,400,300,50);
                                 error.setText("You cannot cancel a reservation that is overdue");
-
                             }
                             else{
                                 reservation.setCancelled(true);
                                 listOfReservations.updateReservation();
+                                frame.dispose();
                             }
                         }
                         updateTable(filter.getSelectedIndex(),model,customer,listOfReservations);
@@ -198,10 +215,10 @@ public class ShowCustomerReservations extends JPanel {
             }
         });
 
-        JLabel note = new JLabel("Delete a reservation by clicking on it");
+        JLabel note = new JLabel("Click on a reservation to check the status or to cancel it");
         note.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
         note.setForeground(Color.red);
-        note.setBounds(620,150,300,30);
+        note.setBounds(580,150,1000,30);
         add(note);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(170,200,1200,500);

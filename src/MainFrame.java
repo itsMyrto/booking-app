@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * This class creates the main frame of the application.
+ * The login page is added.
+ */
 public class MainFrame extends JFrame {
     private LogInWindow login;
 
@@ -35,12 +38,21 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * This method adds an image into the frame
+     */
     public void addInitialImage() { this.add(img); }
 
+    /**
+     * This method removes an image from the frame
+     */
     public void removeInitialImage(){
         this.remove(img);
     }
 
+    /**
+     * Empty Constructor
+     */
     public MainFrame(){
 
     }

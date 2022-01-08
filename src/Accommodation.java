@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -17,8 +18,7 @@ public class Accommodation implements Serializable {
     private boolean hasRestaurant;
     private boolean petsAllowed;
     private ArrayList<Room> rooms;
-
-
+    private JLabel image;
     /**
      * this is an empty constructor
      */
@@ -30,10 +30,14 @@ public class Accommodation implements Serializable {
     /**
      * This is a constructor.
      * Creates an accommodation with specified name, country, type, location and whether or not it has parking or Wi-Fi
+     * @param provider the provider who owns this accommodation
      * @param name the name of the accommodation
      * @param type the type of the accommodation (for example "hotel")
      * @param hasWifi whether or not the accommodation has Wi-Fi
      * @param hasParking whether or not the accommodation has parking
+     * @param hasPool if it has pool or not
+     * @param hasRestaurant if it has a restaurant or not
+     * @param petsAllowed  if the pets are allowed or not
      * @param location the location of the accommodation
      */
     public Accommodation(Provider provider,String name,String type, boolean hasWifi, boolean hasParking,boolean hasPool,boolean hasRestaurant,boolean petsAllowed, Location location)
@@ -48,16 +52,29 @@ public class Accommodation implements Serializable {
         this.hasParking = hasParking;
         this.location = location;
         this.name = name;
+        image = new JLabel(new ImageIcon("src/noImageAvailable.jpg"));
     }
 
+    /**
+     * This method returns if the accommodation has a pool or not.
+     * @return true or false
+     */
     public boolean getHasPool(){
         return hasPool;
     }
 
+    /**
+     * This method returns if the accommodation has a restaurant or not
+     * @return true or false
+     */
     public boolean getHasRestaurant(){
         return hasRestaurant;
     }
 
+    /**
+     * This method returns if pets are allowed in the accommodation
+     * @return true or false
+     */
     public boolean getPetsAllowed(){
         return petsAllowed;
     }
@@ -165,9 +182,13 @@ public class Accommodation implements Serializable {
         rooms.add(room);
     }
 
+    /**
+     * @return The provider who owns this accommodation
+     */
     public Provider getProvider(){
         return provider;
     }
+
     /**
      * This method removes a room from  the arraylist with rooms
      * @param index is the number of one room
@@ -189,17 +210,35 @@ public class Accommodation implements Serializable {
     }
 
     /**
-     * @return  a specific room from the arraylist with rooms based on the room's number
-     * @param index is the room's number
+     * This method returns a room based on its number
+     * @param index The number of the room
+     * @return A room object
      */
-
     public Room getSpecificRoom(int index)
     {
         return rooms.get(index);
     }
 
+    /**
+     * This method returns all the rooms of an accommodation
+     * @return A list filled with rooms
+     */
     public ArrayList<Room> getRooms(){
         return rooms;
     }
 
+    /**
+     * This method changes the image of an accommodation
+     * @param imageName The new image
+     */
+    public void setImage(String imageName){
+        image.setIcon(new ImageIcon(imageName));
+    }
+
+    /**
+     * @return The image of an accommodation
+     */
+    public JLabel getImage(){
+        return image;
+    }
 }

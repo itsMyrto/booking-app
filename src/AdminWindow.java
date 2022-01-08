@@ -1,6 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This window is the panel that contains the menu of the admin.
+ * It contains buttons for all the actions that an admin can do.
+ * Admins can : Accept new users,Send messages,receive messages from other admins,track users
+ */
 public class AdminWindow extends JPanel {
 
     private final GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -17,7 +22,7 @@ public class AdminWindow extends JPanel {
 
     private final int TITLE_HEIGHT = 40;
 
-    private final int BTN_WIDTH = 250;
+    private final int BTN_WIDTH = 270;
     private final int BTN_HEIGHT = 40;
 
     private final int MARGIN_BTN_FROM_EDGES = (PANEL_WIDTH-BTN_WIDTH)/2;
@@ -28,6 +33,14 @@ public class AdminWindow extends JPanel {
     private final String FONT = "Tahoma";
     private final Color CUSTOMIZED_COLOR = Color.decode("#3B5998");
 
+    /**
+     * This is the constructor that creates this panel
+     * @param admin The admin that is logged in
+     * @param listOfAccounts All the accounts of the app
+     * @param listOfAccommodations All the accommodations of the app
+     * @param listOfReservations All the reservations of the app
+     * @param mainFrame The main frame of the app
+     */
     public AdminWindow(Admin admin,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,MainFrame mainFrame){
         this.setSize(1500,800);
 
@@ -108,6 +121,14 @@ public class AdminWindow extends JPanel {
             mainFrame.getContentPane().add(new ApproveAccounts(admin,listOfAccounts,listOfAccommodations,listOfReservations,mainFrame));
             mainFrame.getContentPane().repaint();
 
+        });
+
+        showInbox.addActionListener(e -> {
+            mainFrame.remove(this);
+            mainFrame.removeInitialImage();
+            mainFrame.getContentPane().repaint();
+            mainFrame.getContentPane().add(new ShowMessagesAdmin(admin,listOfAccounts,listOfAccommodations,listOfReservations,mainFrame));
+            mainFrame.getContentPane().repaint();
         });
 
         logout.addActionListener(e -> {

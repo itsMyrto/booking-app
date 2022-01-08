@@ -1,14 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Locale;
 
+/**
+ * This class contains the panel that show up when a provider wants to add a new Accommodation.
+ * It contains some fields where the provider has to type important information for the accommodation (such as the name,the type etc.)
+ * and also some options about the facilities that the accommodations has (such as pool,wifi,parking etc.)
+ */
 public class AccommodationForm extends JPanel {
 
     private JComboBox<String> typeOfAccommodation ;
 
+    /**
+     * This is the constructor where the window is created
+     * @param provider The connected provider who wants to add a new accommodation
+     * @param listOfAccommodations The list with all the accommodations of the program
+     * @param listOfAccounts The list with all the accounts of the program
+     * @param listOfReservations The list with all the reservations of the program
+     * @param mainFrame The frame of the program
+     */
     public AccommodationForm(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame mainFrame){
+
         setSize(1500, 800);
         setLayout(null);
         JButton continueProcess = new JButton("Continue");
@@ -20,6 +32,7 @@ public class AccommodationForm extends JPanel {
         continueProcess.setBackground(new Color(6, 48, 124));
         continueProcess.setFont(new Font("sans serif",Font.ITALIC,15));
         continueProcess.setFocusable(false);
+
         JLabel changeTheType = new JLabel("What kind of accommodation is it?");
         JLabel information = new JLabel("Information:");
         JLabel facilities = new JLabel("Facilities:");
@@ -46,6 +59,7 @@ public class AccommodationForm extends JPanel {
                 }
             }
         };
+
         typeOfAccommodation.setSelectedIndex(0);
         typeOfAccommodation.setBounds(100,115,150,25);
         typeOfAccommodation.setVisible(true);
@@ -170,7 +184,6 @@ public class AccommodationForm extends JPanel {
             }
             Location location = new Location(countryTxt,cityTxt,streetTxt,streetNumberTxt);
             Accommodation accommodation = new Accommodation(provider,nameTxt,selectedTypeTxt,wifiOption,parkingOption,poolOption,restaurantOption,petsOption,location);
-
             removeAll();
             mainFrame.remove(this);
             mainFrame.getContentPane().repaint();
@@ -206,5 +219,27 @@ public class AccommodationForm extends JPanel {
         setVisible(true);
     }
 
+
 }
+
+/**
+ *             if(accommodation.getName().equals("Calma")){
+ *                 accommodation.setImage("src/calma.jpg");
+ *             }
+ *             else if(accommodation.getName().equals("Chloe")){
+ *                 accommodation.setImage("src/chloe.jpg");
+ *             }
+ *             else if(accommodation.getName().equals("Doltso")){
+ *                 accommodation.setImage("src/doltso.jpg");
+ *             }
+ *             else if(accommodation.getName().equals("Esperos Palace")){
+ *                 accommodation.setImage("src/esperros.jpg");
+ *             }
+ *             else if(accommodation.getName().equals("Limneon")){
+ *                 accommodation.setImage("src/limneon.jpg");
+ *             }
+ *             else if(accommodation.getName().equals("Archontiko")){
+ *                 accommodation.setImage("src/luxuryhotel.jpg");
+ *             }
+ */
 
