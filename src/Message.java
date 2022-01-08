@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /**
  * This class represents a message that can be sent from admins to all the users(other admins,providers,customers)
  */
-public class Message {
+public class Message implements Serializable {
     private String text;
     private User sender;
 
