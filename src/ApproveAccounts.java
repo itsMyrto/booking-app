@@ -89,7 +89,7 @@ public class ApproveAccounts extends JPanel {
         else{
             acc.setText("Type: "+unapprovedAccounts.get(0).getTypeOfUser());
             email.setText("Email: "+unapprovedAccounts.get(0).getEmail());
-            fullName.setText("Full Name: "+unapprovedAccounts.get(0).getEmail());
+            fullName.setText("Full Name: "+unapprovedAccounts.get(0).getFullName());
             username.setText("Username: "+unapprovedAccounts.get(0).getUsername());
             empty.setVisible(false);
             approve.setVisible(true);
@@ -112,7 +112,7 @@ public class ApproveAccounts extends JPanel {
                     if(result+1<unapprovedAccounts.size()){
                         acc.setText("Type: "+unapprovedAccounts.get(result+1).getTypeOfUser());
                         email.setText("Email: "+unapprovedAccounts.get(result+1).getEmail());
-                        fullName.setText("Full Name: "+unapprovedAccounts.get(result+1).getEmail());
+                        fullName.setText("Full Name: "+unapprovedAccounts.get(result+1).getFullName());
                         username.setText("Username: "+unapprovedAccounts.get(result+1).getUsername());
                     }
                     else{
@@ -141,7 +141,7 @@ public class ApproveAccounts extends JPanel {
                     if(result+1<unapprovedAccounts.size()){
                         acc.setText("Type: "+unapprovedAccounts.get(result+1).getTypeOfUser());
                         email.setText("Email: "+unapprovedAccounts.get(result+1).getEmail());
-                        fullName.setText("Full Name: "+unapprovedAccounts.get(result+1).getEmail());
+                        fullName.setText("Full Name: "+unapprovedAccounts.get(result+1).getFullName());
                         username.setText("Username: "+unapprovedAccounts.get(result+1).getUsername());
                     }
                     else{
@@ -164,3 +164,4 @@ public class ApproveAccounts extends JPanel {
         setLayout(null);
     }
 }
+
