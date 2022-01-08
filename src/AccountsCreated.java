@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * This class contains all the created accounts while the app is running
+ * This class contains all the created accounts
  */
 public class AccountsCreated {
 
@@ -108,10 +108,7 @@ public class AccountsCreated {
     }
 
     public boolean accountIsUnapproved(User user){
-        boolean isUnapproved = false;
-        if(!user.getApproved()){
-            isUnapproved = true;
-        }
+        boolean isUnapproved = !user.getApproved();
         return isUnapproved;
     }
 
@@ -128,6 +125,15 @@ public class AccountsCreated {
         for(User c:allAccounts){
             System.out.println(c.getUsername());
         }
+    }
+
+    public void sendMessage(Message message,String email){
+        for(User x:allAccounts){
+            if(x.getEmail().equals(email)){
+                x.addMessage(message);
+            }
+        }
+        updateAccounts();
     }
 
     public boolean isEmptyFile(){
@@ -153,7 +159,19 @@ public class AccountsCreated {
         return null;
     }
 
-
+    public String[] getAllUserEmails() {
+        ArrayList<String> emails = new ArrayList<>();
+        for (User x : allAccounts) {
+            emails.add(x.getEmail());
+        }
+        String[] emailsArray = new String[emails.size()];
+        int i=0;
+        for(String x:emails){
+            emailsArray[i]=x;
+            i++;
+        }
+        return emailsArray;
+    }
 }
 
 
