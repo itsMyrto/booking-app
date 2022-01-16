@@ -15,6 +15,7 @@ public class UserProfileWindow extends JPanel {
      * @param mainFrame This is the main frame of the program
      */
     public UserProfileWindow(User user, AccountsCreated listOfAccounts, AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,MainFrame mainFrame) {
+
         setSize(1500,800);
         setLayout(null);
         setBackground(Color.WHITE);
@@ -26,7 +27,7 @@ public class UserProfileWindow extends JPanel {
         returnButton.setBackground(Color.white);
         returnButton.setFocusable(false);
         returnButton.setBorder(null);
-        add(returnButton);
+
 
         returnButton.addActionListener(e -> {
             mainFrame.remove(this);
@@ -45,15 +46,17 @@ public class UserProfileWindow extends JPanel {
 
 
         JLabel imgLabel = new JLabel(new ImageIcon("src/profileimage.png"));
-        JLabel type = new JLabel(user.getTypeOfUser().toUpperCase(Locale.ROOT));
-        type.setForeground(Color.WHITE);
-        type.setFont(new Font("Tahoma",Font.ITALIC+Font.BOLD,28));
-        type.setBounds(800,250,300,30);
+        imgLabel.setBounds(250,200,1000,400);
 
+        JLabel type = new JLabel(user.getTypeOfUser().toUpperCase(Locale.ROOT));
         JLabel personalInfo = new JLabel("Personal Information");
         JLabel email = new JLabel("Email: "+user.getEmail());
         JLabel fullName = new JLabel("Full Name: "+user.getFullName());
         JLabel country = new JLabel("Origin: "+user.getCountry());
+
+        type.setForeground(Color.WHITE);
+        type.setFont(new Font("Tahoma",Font.ITALIC+Font.BOLD,28));
+        type.setBounds(800,250,300,30);
 
         personalInfo.setFont(new Font("Tahoma",Font.ITALIC+Font.BOLD,28));
         personalInfo.setBounds(600,50,400,50);
@@ -71,8 +74,7 @@ public class UserProfileWindow extends JPanel {
         country.setBounds(780,495,400,50);
         country.setForeground(Color.WHITE);
 
-
-        imgLabel.setBounds(250,200,1000,400);
+        add(returnButton);
         add(type);
         add(email);
         add(personalInfo);
