@@ -1,9 +1,5 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -25,6 +21,7 @@ public class ApproveAccounts extends JPanel {
         AtomicInteger i= new AtomicInteger();
         setSize(1000,800);
         setBackground(Color.WHITE);
+
         JLabel label = new JLabel("Approve & Disapprove Accounts");
         label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
         label.setForeground(new Color(0x06307C));
@@ -35,6 +32,7 @@ public class ApproveAccounts extends JPanel {
         JLabel email = new JLabel("Email");
         JLabel fullName = new JLabel("Full Name");
         JLabel username = new JLabel("username");
+
         JLabel error = new JLabel("No more new accounts to approve/disapprove");
         error.setBounds(490,300,800,100);
         error.setFont(new Font("Tahoma",Font.ITALIC+Font.BOLD,18));
@@ -50,6 +48,7 @@ public class ApproveAccounts extends JPanel {
         returnButton.setFocusable(false);
         returnButton.setBorder(null);
         add(returnButton);
+
         returnButton.addActionListener(e -> {
             mainFrame.remove(this);
             mainFrame.getContentPane().repaint();
@@ -87,24 +86,23 @@ public class ApproveAccounts extends JPanel {
 
 
         JButton approve = new JButton("Approve");
-        JButton disapprove = new JButton("Disapprove");
         approve.setBounds(450,500,200,30);
         approve.setFont(new Font("sans serif",Font.ITALIC+Font.ITALIC,16));
         approve.setBackground(Color.GREEN);
         approve.setForeground(Color.WHITE);
         approve.setFocusable(false);
+        approve.setVisible(false);
+        add(approve);
+
+        JButton disapprove = new JButton("Disapprove");
         disapprove.setFocusable(false);
         disapprove.setBackground(Color.RED);
         disapprove.setForeground(Color.white);
         disapprove.setBounds(720,500,200,30);
-
-        approve.setVisible(false);
         disapprove.setVisible(false);
-        add(approve);
         add(disapprove);
 
         ArrayList<User> unapprovedAccounts = listOfAccounts.getUnapprovedAccount();
-        System.out.println(unapprovedAccounts.size());
 
         if(unapprovedAccounts.size()==0){
             empty.setVisible(true);
