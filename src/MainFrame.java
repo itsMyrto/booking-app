@@ -11,18 +11,22 @@ public class MainFrame extends JFrame {
     private JLabel img = new JLabel();
 
     private final GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    private final int FRAME_WIDTH = env.getMaximumWindowBounds().width;
+    private final int FRAME_HEIGHT = env.getMaximumWindowBounds().height;
+
+    private final int IMG_WIDTH = (int) (FRAME_WIDTH*0.6);
+    private final int IMG_HEIGHT = FRAME_HEIGHT;
+    private final int MARGIN_IMG_FROM_LEFT_EDGE = FRAME_WIDTH - IMG_WIDTH;
 
     public static final int[] FRAME_IMAGE_RESOLUTION = {800, 829};
 
     public MainFrame(AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations){
-        Rectangle bounds = env.getMaximumWindowBounds();
-
         login = new LogInWindow(listOfAccounts,listOfAccommodations,listOfReservations, this);
-        login.setSize(new Dimension(bounds.getBounds().width, bounds.getBounds().height));
+        login.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 
         ImageIcon icon = new ImageIcon("src/hotel.jpg");
         img.setIcon(icon);
-        img.setBounds(bounds.getBounds().width-FRAME_IMAGE_RESOLUTION[0], 0, FRAME_IMAGE_RESOLUTION[0], FRAME_IMAGE_RESOLUTION[1]);
+        img.setBounds(MARGIN_IMG_FROM_LEFT_EDGE, 0, IMG_WIDTH, IMG_HEIGHT);
         img.setOpaque(false);
 
         this.getContentPane().add(login);
@@ -36,6 +40,30 @@ public class MainFrame extends JFrame {
         this.getContentPane().setBackground(Color.white);
         this.setLayout(null);
         this.setVisible(true);
+    }
+
+    public int getFRAME_WIDTH(){
+        return FRAME_WIDTH;
+    }
+
+    public int getFRAME_HEIGHT(){
+        return FRAME_HEIGHT;
+    }
+
+    /**
+     *
+     * @return the image width
+     */
+    public int getIMG_WIDTH(){
+        return IMG_WIDTH;
+    }
+
+    /**
+     *
+     * @return the image height
+     */
+    public int getIMG_HEIGHT(){
+        return IMG_HEIGHT;
     }
 
     /**
