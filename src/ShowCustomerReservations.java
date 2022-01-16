@@ -32,12 +32,20 @@ public class ShowCustomerReservations extends JPanel {
 
         JLabel label = new JLabel("MY RESERVATIONS");
         label.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 30));
+        label.setForeground(new Color(6, 48, 124));
+        label.setBounds(615,10,500,150);
+
         JLabel chooseFilter = new JLabel("Choose a filter");
         chooseFilter.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 15));
         chooseFilter.setForeground(new Color(6, 48, 124));
         chooseFilter.setBounds(195,60,200,20);
-        label.setForeground(new Color(6, 48, 124));
-        label.setBounds(615,10,500,150);
+
+        JLabel note = new JLabel("Click on a reservation to check the status or to cancel it");
+        note.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        note.setForeground(Color.red);
+        note.setBounds(580,150,1000,30);
+        add(note);
+
         String [] tableHeaders = {"Name","Type","Country","City","Address","Room Number","Price (one night)","Capacity","View","Total Price","Dates"};
         DefaultTableModel model = new DefaultTableModel(createTable(customer,listOfReservations),tableHeaders){
             @Override
@@ -61,7 +69,6 @@ public class ShowCustomerReservations extends JPanel {
                 }
             }
         };
-
         filter.setBounds(170,100,170,30);
         filter.setFocusable(false);
         filter.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
@@ -77,7 +84,6 @@ public class ShowCustomerReservations extends JPanel {
 
         JTable table = new JTable(model);
         table.setOpaque(false);
-        setOpaque(false);
         table.setFocusable(false);
         table.setRowSelectionAllowed(true);
         table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC+Font.BOLD, 12));
@@ -215,20 +221,18 @@ public class ShowCustomerReservations extends JPanel {
             }
         });
 
-        JLabel note = new JLabel("Click on a reservation to check the status or to cancel it");
-        note.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
-        note.setForeground(Color.red);
-        note.setBounds(580,150,1000,30);
-        add(note);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(170,200,1200,500);
         scrollPane.getViewport().setBackground(Color.WHITE);
         filter.getEditor().getEditorComponent().setBackground(Color.WHITE);
         scrollPane.setVisible(true);
+
+
         add(scrollPane);
         add(filter);
         add(chooseFilter);
         add(label);
+        setOpaque(false);
     }
 
     public String[][] createTable(Customer customer,ReservationsCreated listOfReservations){
@@ -237,8 +241,6 @@ public class ShowCustomerReservations extends JPanel {
         String[][] data = new String[customerReservations.size()][11];
         int count = 0;
         for(Reservation x: customerReservations){
-            int r = x.getRoomNumber();
-            //System.out.println(r+" "+x.getAccommodation().getName());
             data[count][0] = x.getAccommodation().getName();
             data[count][1] = x.getAccommodation().getType();
             data[count][2] = x.getAccommodation().getLocation().getCountry();
