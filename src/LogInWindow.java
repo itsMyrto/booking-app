@@ -31,8 +31,8 @@ public class LogInWindow extends JPanel{
 
     private final int LOGIN_LABEL_HEIGHT = 30;
 
-    private final int PANEL_WIDTH = (int) (env.getMaximumWindowBounds().getWidth()+1) - MainFrame.FRAME_IMAGE_RESOLUTION[0];
-    private final int PANEL_HEIGHT = (int) (env.getMaximumWindowBounds().getHeight()+1);
+    private int PANEL_WIDTH;
+    private int PANEL_HEIGHT;
 
     private final int LOGIN_BTN_WIDTH = 100;
     private final int LOGIN_BTN_HEIGHT = 40;
@@ -60,6 +60,9 @@ public class LogInWindow extends JPanel{
 
     public LogInWindow(AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations, MainFrame mainFrame){
         this.mainFrame = mainFrame;
+
+        PANEL_WIDTH = mainFrame.getFRAME_WIDTH() - mainFrame.getIMG_WIDTH();
+        PANEL_HEIGHT = mainFrame.getFRAME_HEIGHT();
 
         // Firstly, create a counter variable to keep track of the vertical pixels
         int pixelCounter = MARGIN_LOGO_FROM_TOP;
