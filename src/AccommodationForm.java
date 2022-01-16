@@ -23,28 +23,34 @@ public class AccommodationForm extends JPanel {
 
         setSize(1500, 800);
         setLayout(null);
+
         JButton continueProcess = new JButton("Continue");
-        JLabel error = new JLabel("Please Enter Valid Information");
-        error.setForeground(Color.red);
-        error.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,17));
         continueProcess.setBounds(70,660,200,35);
         continueProcess.setForeground(Color.WHITE);
         continueProcess.setBackground(new Color(6, 48, 124));
         continueProcess.setFont(new Font("sans serif",Font.ITALIC,15));
         continueProcess.setFocusable(false);
 
+        JLabel error = new JLabel("Please Enter Valid Information");
+        error.setForeground(Color.red);
+        error.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,17));
+
+
         JLabel changeTheType = new JLabel("What kind of accommodation is it?");
+        changeTheType.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
+        changeTheType.setBounds(50,50,300,30);
+        changeTheType.setForeground(new Color(0x06307C));
+
         JLabel information = new JLabel("Information:");
+        information.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,18));
+        information.setBounds(120,200,200,30);
+        information.setForeground(new Color(0x06307C));
+
         JLabel facilities = new JLabel("Facilities:");
         facilities.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,18));
         facilities.setForeground(new Color(0x06307C));
         facilities.setBounds(450,90,200,30);
-        information.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,18));
-        information.setBounds(120,200,200,30);
-        changeTheType.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
-        changeTheType.setBounds(50,50,300,30);
-        information.setForeground(new Color(0x06307C));
-        changeTheType.setForeground(new Color(0x06307C));
+
         String[] types = {"Hotel","Apartment","Hostel","Motel"};
         typeOfAccommodation = new JComboBox<>(types){
             @Override
@@ -65,29 +71,40 @@ public class AccommodationForm extends JPanel {
         typeOfAccommodation.setVisible(true);
         typeOfAccommodation.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         typeOfAccommodation.getEditor().getEditorComponent().setBackground(Color.WHITE);
+
         setOpaque(false);
+
         JRadioButton hasWifi = new JRadioButton("Yes");
         hasWifi.setOpaque(false);
+
         JRadioButton doesNotHaveWifi = new JRadioButton("No");
         doesNotHaveWifi.setOpaque(false);
         doesNotHaveWifi.setSelected(true);
+
         JRadioButton hasParking = new JRadioButton("Yes");
         hasParking.setOpaque(false);
+
         JRadioButton doesNotHaveParking = new JRadioButton("No");
         doesNotHaveParking.setOpaque(false);
         doesNotHaveParking.setSelected(true);
+
         JRadioButton hasRestaurant = new JRadioButton("Yes");
         hasRestaurant.setOpaque(false);
+
         JRadioButton doesNotHaveRestaurant = new JRadioButton("No");
         doesNotHaveRestaurant.setOpaque(false);
         doesNotHaveRestaurant.setSelected(true);
+
         JRadioButton petsAllowed = new JRadioButton("Yes");
         petsAllowed.setOpaque(false);
+
         JRadioButton petsNotAllowed = new JRadioButton("No");
         petsNotAllowed.setOpaque(false);
         petsNotAllowed.setSelected(true);
+
         JRadioButton hasPool = new JRadioButton("Yes");
         hasPool.setOpaque(false);
+
         JRadioButton doesNotHavePool = new JRadioButton("No");
         doesNotHavePool.setOpaque(false);
         doesNotHavePool.setSelected(true);
@@ -95,27 +112,35 @@ public class AccommodationForm extends JPanel {
         ButtonGroup wifiGroup = new ButtonGroup();
         wifiGroup.add(hasWifi);
         wifiGroup.add(doesNotHaveWifi);
+
         ButtonGroup parkingGroup = new ButtonGroup();
         parkingGroup.add(hasParking);
         parkingGroup.add(doesNotHaveParking);
+
         ButtonGroup restaurantGroup = new ButtonGroup();
         restaurantGroup.add(hasRestaurant);
         restaurantGroup.add(doesNotHaveRestaurant);
+
         ButtonGroup poolGroup = new ButtonGroup();
         poolGroup.add(hasPool);
         poolGroup.add(doesNotHavePool);
+
         ButtonGroup petsGroup = new ButtonGroup();
         petsGroup.add(petsAllowed);
         petsGroup.add(petsNotAllowed);
 
         JTextField nameOfTheAccommodation = new JTextField("Name of the Accommodation");
         nameOfTheAccommodation.setBounds(70,250,200,30);
+
         JTextField country = new JTextField("Country");
         country.setBounds(70,300,200,30);
+
         JTextField city = new JTextField("City");
         city.setBounds(70,350,200,30);
+
         JTextField street = new JTextField("Street");
         street.setBounds(70,400,200,30);
+
         JTextField streetNumber = new JTextField("Street Number");
         streetNumber.setBounds(70,450,200,30);
 
@@ -221,25 +246,4 @@ public class AccommodationForm extends JPanel {
 
 
 }
-
-/**
- *             if(accommodation.getName().equals("Calma")){
- *                 accommodation.setImage("src/calma.jpg");
- *             }
- *             else if(accommodation.getName().equals("Chloe")){
- *                 accommodation.setImage("src/chloe.jpg");
- *             }
- *             else if(accommodation.getName().equals("Doltso")){
- *                 accommodation.setImage("src/doltso.jpg");
- *             }
- *             else if(accommodation.getName().equals("Esperos Palace")){
- *                 accommodation.setImage("src/esperros.jpg");
- *             }
- *             else if(accommodation.getName().equals("Limneon")){
- *                 accommodation.setImage("src/limneon.jpg");
- *             }
- *             else if(accommodation.getName().equals("Archontiko")){
- *                 accommodation.setImage("src/luxuryhotel.jpg");
- *             }
- */
 
