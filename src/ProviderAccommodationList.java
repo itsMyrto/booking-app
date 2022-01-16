@@ -13,6 +13,10 @@ import java.util.Locale;
 
 public class ProviderAccommodationList extends JPanel {
     ProviderAccommodationList(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame mainFrame){
+        setSize(1500,800);
+        setOpaque(false);
+        setLayout(null);
+
         JButton returnButton = new JButton("Return");
         returnButton.setBounds(10,10,50,20);
         returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
@@ -20,23 +24,24 @@ public class ProviderAccommodationList extends JPanel {
         returnButton.setBackground(Color.white);
         returnButton.setFocusable(false);
         returnButton.setBorder(null);
+
         JLabel label2 = new JLabel("Click to an accommodation to make changes");
         label2.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
         label2.setForeground(Color.red);
         label2.setBounds(600,50,400,30);
         add(label2);
+
         JLabel label = new JLabel("My Accommodation List");
         label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
         label.setForeground(new Color(0x06307C));
         label.setBounds(600,10,400,30);
-        setSize(1500,800);
-        setOpaque(false);
-        setLayout(null);
+
         JLabel chooseFilter = new JLabel("Choose a filter");
         chooseFilter.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 15));
         chooseFilter.setForeground(new Color(6, 48, 124));
         chooseFilter.setBounds(50,120,200,20);
         add(chooseFilter);
+
         String [] tableHeaders = {"Name","Type","Country","City","Address","Rooms","Wifi","Parking","Pool","Restaurant","Pets Allowed"};
         String [] tablesHeaders2 = {"Name","Type","Country","City","Address","Room Number","Total Price","Customer Email","Customer Name","Customer Origin","Dates"};
         String[][] data = makeTable(listOfAccommodations,provider);
@@ -46,8 +51,10 @@ public class ProviderAccommodationList extends JPanel {
                 return false;
             }
         };
+
         JTable table = new JTable(model);
         table.setOpaque(false);
+
         JComboBox<String> filters;
         String[] filterOption = {"Show All Accommodations","Show Reserved Accommodations","Show Cancelled Reservations"};
         filters = new JComboBox<>(filterOption){
@@ -64,36 +71,35 @@ public class ProviderAccommodationList extends JPanel {
             }
         };
 
-        filters.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int optionFromComboBox = filters.getSelectedIndex();
-                if (optionFromComboBox != 0) {
-                    for(int i=0;i<11;i++){
-                        table.getColumnModel().getColumn(i).setHeaderValue(tablesHeaders2[i]);
-                    }
-                    updateTable(optionFromComboBox, model, provider, listOfReservations, listOfAccommodations);
+        filters.addActionListener(e -> {
+            int optionFromComboBox = filters.getSelectedIndex();
+            if (optionFromComboBox != 0) {
+                for(int i=0;i<11;i++){
+                    table.getColumnModel().getColumn(i).setHeaderValue(tablesHeaders2[i]);
                 }
-                else{
-                    for(int i=0;i<11;i++){
-                        table.getColumnModel().getColumn(i).setHeaderValue(tableHeaders[i]);
-                        String[][] accommodationData = makeAccommodationList(listOfAccommodations,provider,model);
-                        for (String[] strings : accommodationData) {
-                            model.addRow(new Object[] {strings[0],strings[1],strings[2],strings[3],strings[4],strings[5],strings[6],strings[7],strings[8],strings[9],strings[10]});
-                        }
+                updateTable(optionFromComboBox, model, provider, listOfReservations, listOfAccommodations);
+            }
+            else{
+                for(int i=0;i<11;i++){
+                    table.getColumnModel().getColumn(i).setHeaderValue(tableHeaders[i]);
+                    String[][] accommodationData = makeAccommodationList(listOfAccommodations,provider,model);
+                    for (String[] strings : accommodationData) {
+                        model.addRow(new Object[] {strings[0],strings[1],strings[2],strings[3],strings[4],strings[5],strings[6],strings[7],strings[8],strings[9],strings[10]});
                     }
                 }
             }
         });
+        filters.setBounds(10,150,230,20);
 
         table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC+Font.BOLD, 12));
         table.getTableHeader().setBackground(new Color(182, 219, 252));
-        filters.setBounds(10,150,230,20);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setVisible(true);
         scrollPane.getViewport().setBackground(new Color(0xFFFFFF));
         scrollPane.setBounds(200,200,1200,300);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         table.addMouseListener(new MouseListener() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -104,9 +110,11 @@ public class ProviderAccommodationList extends JPanel {
                 int rowIndex = table.getSelectedRow();
                 if(rowIndex != -1){
                     JFrame frame = new JFrame("Modify Accommodations");
-                    JLabel error = new JLabel("Invalid information");
                     frame.getContentPane().setBackground(Color.WHITE);
                     frame.setResizable(false);
+                    frame.setLocationRelativeTo(null);
+                    frame.setLayout(null);
+                    frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
                     JLabel label = new JLabel("Change information");
                     label.setForeground(new Color(0x06307C));
@@ -163,16 +171,34 @@ public class ProviderAccommodationList extends JPanel {
                     frame.add(chooseView);
 
                     JButton addRoom = new JButton("Add Room");
-                    JLabel error2 = new JLabel("Invalid Information");
-                    error.setForeground(Color.red);
-                    error.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
                     addRoom.setFocusable(false);
                     addRoom.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
                     addRoom.setBackground(new Color(0x06307C));
                     addRoom.setForeground(Color.white);
+                    addRoom.setBounds(600,450,200,30);
+
+                    JLabel error2 = new JLabel("Invalid Information");
+                    error2.setForeground(Color.red);
+
+                    JLabel error = new JLabel("Invalid information");
+                    error.setForeground(Color.red);
+                    error.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+
                     JTextField newRoomCapacity = new JTextField("Room Capacity");
+                    newRoomCapacity.setBounds(600,100,200,25);
+
                     JTextField newRoomPrice = new JTextField("Price For One Night");
+                    newRoomPrice.setBounds(600,150,200,25);
+
                     JTextField newRoomBeds = new JTextField("Number of Beds");
+                    newRoomBeds.setBounds(600,200,200,25);
+
+                    JButton deleteTheAccommodation = new JButton("Delete This Accommodation");
+                    deleteTheAccommodation.setBounds(700,700,300,30);
+                    deleteTheAccommodation.setForeground(Color.white);
+                    deleteTheAccommodation.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    deleteTheAccommodation.setBackground(new Color(0x06307C));
+
                     JComboBox<String> view;
                     String[] viewType = {"Sea","Forest","The city","Landmark","Lake"};
                     view = new JComboBox<>(viewType){
@@ -189,25 +215,9 @@ public class ProviderAccommodationList extends JPanel {
                         }
                     };
                     view.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
-                    newRoomCapacity.setBounds(600,100,200,25);
-                    newRoomPrice.setBounds(600,150,200,25);
-                    newRoomBeds.setBounds(600,200,200,25);
                     view.setBounds(600,300,200,25);
-                    addRoom.setBounds(600,450,200,30);
                     view.setSelectedIndex(0);
 
-                    frame.add(newRoom);
-                    frame.add(newRoomCapacity);
-                    frame.add(newRoomBeds);
-                    frame.add(newRoomPrice);
-                    frame.add(view);
-                    frame.add(addRoom);
-                    error2.setForeground(Color.red);
-                    frame.add(error2);
-                    frame.setSize(1500,800);
-                    frame.setLocationRelativeTo(null);
-                    frame.setLayout(null);
-                    frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                     String nameOfTheAcc = table.getValueAt(rowIndex,0).toString();
                     String address = table.getValueAt(rowIndex,4).toString();
                     Accommodation selectedAccommodation = listOfAccommodations.getSpecificAccommodation(nameOfTheAcc,address);
@@ -215,12 +225,23 @@ public class ProviderAccommodationList extends JPanel {
                         frame.dispose();
                         return;
                     }
+
                     JTextField name = new JTextField(selectedAccommodation.getName());
+
                     JTextField type = new JTextField(selectedAccommodation.getType());
+
                     JTextField capacity = new JTextField(String.valueOf(selectedAccommodation.getSpecificRoom(0).getCapacity()));
+
                     JTextField price = new JTextField(String.valueOf(selectedAccommodation.getSpecificRoom(0).getPricePerNight()));
+
                     JTextField beds = new JTextField(String.valueOf(selectedAccommodation.getSpecificRoom(0).getTotalBeds()));
+
                     JButton changes = new JButton("Confirm Changes");
+                    changes.setBounds(350,700,300,30);
+                    changes.setForeground(Color.WHITE);
+                    changes.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+                    changes.setBackground(new Color(0x06307C));
+
                     JComboBox<String> rooms;
                     String[] totalRooms = new String[selectedAccommodation.getNumberOfRooms()];
                     for(int i=0;i<selectedAccommodation.getNumberOfRooms();i++){
@@ -238,18 +259,16 @@ public class ProviderAccommodationList extends JPanel {
                             }
                         }
                     };
-                    rooms.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            System.out.println("Here");
-                            int optionFromComboBox = rooms.getSelectedIndex();
-                            name.setText(selectedAccommodation.getName());
-                            type.setText(selectedAccommodation.getType());
-                            capacity.setText(String.valueOf(selectedAccommodation.getSpecificRoom(optionFromComboBox).getCapacity()));
-                            beds.setText(String.valueOf(selectedAccommodation.getSpecificRoom(optionFromComboBox).getTotalBeds()));
-                            price.setText(String.valueOf(selectedAccommodation.getSpecificRoom(optionFromComboBox).getPricePerNight()));
 
-                        }
+                    rooms.addActionListener(e12 -> {
+                        System.out.println("Here");
+                        int optionFromComboBox = rooms.getSelectedIndex();
+                        name.setText(selectedAccommodation.getName());
+                        type.setText(selectedAccommodation.getType());
+                        capacity.setText(String.valueOf(selectedAccommodation.getSpecificRoom(optionFromComboBox).getCapacity()));
+                        beds.setText(String.valueOf(selectedAccommodation.getSpecificRoom(optionFromComboBox).getTotalBeds()));
+                        price.setText(String.valueOf(selectedAccommodation.getSpecificRoom(optionFromComboBox).getPricePerNight()));
+
                     });
 
 
@@ -331,7 +350,6 @@ public class ProviderAccommodationList extends JPanel {
 
                     });
 
-                    JButton deleteTheAccommodation = new JButton("Delete This Accommodation");
                     deleteTheAccommodation.addActionListener(e1 -> {
                         listOfAccommodations.deleteAnAccommodation(selectedAccommodation);
                         listOfReservations.removeReservations(selectedAccommodation);
@@ -357,19 +375,20 @@ public class ProviderAccommodationList extends JPanel {
                     });
 
                     name.setBounds(100,100,200,30);
-                    deleteTheAccommodation.setBounds(700,700,300,30);
-                    deleteTheAccommodation.setForeground(Color.white);
-                    deleteTheAccommodation.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
-                    deleteTheAccommodation.setBackground(new Color(0x06307C));
                     type.setBounds(100,200,200,30);
                     rooms.setBounds(100,300,200,30);
                     capacity.setBounds(100,400,200,30);
                     beds.setBounds(100,600,200,30);
                     price.setBounds(100,500,200,30);
-                    changes.setBounds(350,700,300,30);
-                    changes.setForeground(Color.WHITE);
-                    changes.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
-                    changes.setBackground(new Color(0x06307C));
+
+                    frame.add(newRoom);
+                    frame.add(newRoomCapacity);
+                    frame.add(newRoomBeds);
+                    frame.add(newRoomPrice);
+                    frame.add(view);
+                    frame.add(addRoom);
+                    frame.add(error2);
+                    frame.setSize(1500,800);
                     frame.add(numberOfBedsA);
                     frame.add(capacity);
                     frame.add(beds);
