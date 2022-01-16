@@ -14,6 +14,12 @@ public class TrackingWindow extends JPanel {
         setSize(1500,800);
         setBackground(Color.WHITE);
 
+        JLabel label = new JLabel("Track Customers & Providers");
+        label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
+        label.setForeground(new Color(0x06307C));
+        label.setBounds(520,50,400,30);
+        add(label);
+
         JLabel customerDetails= new JLabel();
         customerDetails.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
         customerDetails.setForeground(new Color(0x06307C));
@@ -26,6 +32,15 @@ public class TrackingWindow extends JPanel {
         label2.setBounds(20,145,400,30);
         label2.setVisible(false);
         add(label2);
+
+        JButton returnButton = new JButton("Return");
+        returnButton.setBounds(10,10,50,20);
+        returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        returnButton.setForeground(new Color(191, 0, 255));
+        returnButton.setBackground(Color.white);
+        returnButton.setFocusable(false);
+        returnButton.setBorder(null);
+        add(returnButton);
 
         String[] allEmails = listOfAccounts.getAllCustomersEmail();
         JComboBox<String > users = new JComboBox<>(allEmails) {
@@ -43,15 +58,8 @@ public class TrackingWindow extends JPanel {
         };
         users.setSelectedIndex(0);
         users.setVisible(false);
+        users.setBounds(170,150,220,25);
 
-        JButton returnButton = new JButton("Return");
-        returnButton.setBounds(10,10,50,20);
-        returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
-        returnButton.setForeground(new Color(191, 0, 255));
-        returnButton.setBackground(Color.white);
-        returnButton.setFocusable(false);
-        returnButton.setBorder(null);
-        add(returnButton);
         returnButton.addActionListener(e -> {
             mainFrame.remove(this);
             mainFrame.getContentPane().repaint();
@@ -60,11 +68,6 @@ public class TrackingWindow extends JPanel {
             mainFrame.getContentPane().repaint();
         });
 
-        JLabel label = new JLabel("Track Customers & Providers");
-        label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
-        label.setForeground(new Color(0x06307C));
-        label.setBounds(520,50,400,30);
-        add(label);
 
         String [] tableHeaders2 = {"Reservation Status","Name","Country","City","Room Number","Total Price","Dates"};
         String [] tableHeaders3 = {"User","Name","Country","City","Room Number","Total Price","Dates"};
@@ -104,7 +107,7 @@ public class TrackingWindow extends JPanel {
                 for(int i=0;i<7;i++){
                     table.getColumnModel().getColumn(i).setHeaderValue(tableHeaders3[i]);
                 }
-                updateTable(optionFromComboBox, model, listOfAccounts, listOfAccommodations, listOfReservations);
+                updateTable(optionFromComboBox, model, listOfReservations);
             }
             else if(optionFromComboBox==0){
                 users.setVisible(false);
@@ -138,7 +141,7 @@ public class TrackingWindow extends JPanel {
                         }
                     }
 
-                    updateTableForASpecificUser(user,optionFromComboBox,model,listOfAccounts,listOfAccommodations,listOfReservations);
+                    updateTableForASpecificUser(user,model,listOfAccommodations,listOfReservations);
                 });
             }
         });
@@ -146,15 +149,17 @@ public class TrackingWindow extends JPanel {
         filters.setBounds(170,100,220,20);
         filters.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         filters.setForeground(new Color(0x06307C));
+
         table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC+Font.BOLD, 12));
         table.getTableHeader().setBackground(new Color(182, 219, 252));
+
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(170,200,1200,500);
         scrollPane.getViewport().setBackground(Color.WHITE);
-        users.setBounds(170,150,220,25);
+
+
         add(users);
         add(customerDetails);
-        //table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setOpaque(false);
         add(scrollPane);
         add(filters);
@@ -187,7 +192,7 @@ public class TrackingWindow extends JPanel {
         return data;
     }
 
-    public void updateTable(int optionFromComboBox,DefaultTableModel model,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations){
+    public void updateTable(int optionFromComboBox,DefaultTableModel model,ReservationsCreated listOfReservations){
         model.setRowCount(0);
         ArrayList<Reservation> reservations;
         if(optionFromComboBox==1){
@@ -222,7 +227,7 @@ public class TrackingWindow extends JPanel {
         }
     }
 
-    public void updateTableForASpecificUser(User user,int optionFromComboBox,DefaultTableModel model,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations){
+    public void updateTableForASpecificUser(User user,DefaultTableModel model,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations){
         model.setRowCount(0);
         if(user instanceof Customer){
             ArrayList<Reservation> reservations = listOfReservations.reservationsOfASpecificCustomer((Customer) user);
