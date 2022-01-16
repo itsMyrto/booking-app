@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class CustomerWindow extends JPanel {
-    private MainFrame mainFrame;
-
     private final GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
     private final int PANEL_WIDTH = (int) (env.getMaximumWindowBounds().getWidth()+1) - MainFrame.FRAME_IMAGE_RESOLUTION[0];
     private final int PANEL_HEIGHT = (int) (env.getMaximumWindowBounds().getHeight()+1);
@@ -33,7 +31,6 @@ public class CustomerWindow extends JPanel {
     private final Color CUSTOMIZED_COLOR = Color.decode("#3B5998");
 
     public CustomerWindow(Customer customer,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations, MainFrame mainFrame){
-        this.mainFrame = mainFrame;
         this.setSize(PANEL_WIDTH,PANEL_HEIGHT);
 
         BufferedImage img = null;
