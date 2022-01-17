@@ -12,35 +12,47 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class ProviderAccommodationList extends JPanel {
+
+    GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    public final int PANEL_WIDTH = (int) (env.getMaximumWindowBounds().getWidth());
+    public final int PANEL_HEIGHT = (int) (env.getMaximumWindowBounds().getHeight());
+    private final int TABLE_WIDTH = (int) (0.9*PANEL_WIDTH);
+    private final int TABLE_HEIGHT = (int) (0.7*PANEL_HEIGHT);
+    private final int MARGIN_TABLE_FROM_TOP = (PANEL_HEIGHT-TABLE_HEIGHT)/2;
+    private final int MARGIN_BETWEEN_TABLE_AND_EDGES = (PANEL_WIDTH-TABLE_WIDTH)/2;
+
     ProviderAccommodationList(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame mainFrame){
-        setSize(1500,800);
+
         setOpaque(false);
         setLayout(null);
 
+        this.setSize(PANEL_WIDTH,PANEL_HEIGHT);
+        setBackground(Color.WHITE);
+
+        int pixelCounter = 0;
+
         JButton returnButton = new JButton("Return");
-        returnButton.setBounds(10,10,50,20);
+        returnButton.setBounds(0,pixelCounter,50,20);
         returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
         returnButton.setForeground(new Color(191, 0, 255));
         returnButton.setBackground(Color.white);
         returnButton.setFocusable(false);
         returnButton.setBorder(null);
 
-        JLabel label2 = new JLabel("Click to an accommodation to make changes");
-        label2.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
-        label2.setForeground(Color.red);
-        label2.setBounds(600,50,400,30);
-        add(label2);
-
         JLabel label = new JLabel("My Accommodation List");
         label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
         label.setForeground(new Color(0x06307C));
-        label.setBounds(600,10,400,30);
+        label.setBounds(0,pixelCounter,PANEL_WIDTH,40);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel chooseFilter = new JLabel("Choose a filter");
-        chooseFilter.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 15));
-        chooseFilter.setForeground(new Color(6, 48, 124));
-        chooseFilter.setBounds(50,120,200,20);
-        add(chooseFilter);
+        pixelCounter+=50;
+
+        JLabel label2 = new JLabel("Click to an accommodation to make changes");
+        label2.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        label2.setForeground(Color.red);
+        label2.setBounds(0,pixelCounter,PANEL_WIDTH,30);
+        label2.setHorizontalAlignment(SwingConstants.CENTER);
+        add(label2);
 
         String [] tableHeaders = {"Name","Type","Country","City","Address","Rooms","Wifi","Parking","Pool","Restaurant","Pets Allowed"};
         String [] tablesHeaders2 = {"Name","Type","Country","City","Address","Room Number","Total Price","Customer Email","Customer Name","Customer Origin","Dates"};
@@ -89,7 +101,8 @@ public class ProviderAccommodationList extends JPanel {
                 }
             }
         });
-        filters.setBounds(10,150,230,20);
+
+        filters.setBounds(PANEL_WIDTH/10,pixelCounter,200,20);
 
         table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC+Font.BOLD, 12));
         table.getTableHeader().setBackground(new Color(182, 219, 252));
@@ -98,7 +111,7 @@ public class ProviderAccommodationList extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setVisible(true);
         scrollPane.getViewport().setBackground(new Color(0xFFFFFF));
-        scrollPane.setBounds(200,200,1200,300);
+        scrollPane.setBounds(MARGIN_BETWEEN_TABLE_AND_EDGES,MARGIN_TABLE_FROM_TOP,TABLE_WIDTH,TABLE_HEIGHT);
 
         table.addMouseListener(new MouseListener() {
             @Override
@@ -110,6 +123,7 @@ public class ProviderAccommodationList extends JPanel {
                 int rowIndex = table.getSelectedRow();
                 if(rowIndex != -1){
                     JFrame frame = new JFrame("Modify Accommodations");
+                    frame.setSize(1500,800);
                     frame.getContentPane().setBackground(Color.WHITE);
                     frame.setResizable(false);
                     frame.setLocationRelativeTo(null);
@@ -388,7 +402,6 @@ public class ProviderAccommodationList extends JPanel {
                     frame.add(view);
                     frame.add(addRoom);
                     frame.add(error2);
-                    frame.setSize(1500,800);
                     frame.add(numberOfBedsA);
                     frame.add(capacity);
                     frame.add(beds);
@@ -515,3 +528,4 @@ public class ProviderAccommodationList extends JPanel {
         return data;
     }
 }
+
