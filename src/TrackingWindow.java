@@ -321,6 +321,7 @@ public class TrackingWindow extends JPanel {
             data[count][6] = String.valueOf(listOfReservations.getTheNumberOfReservationsOfAnAccommodation(x));
             count++;
         }
+        
         return data;
     }
 }
