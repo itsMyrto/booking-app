@@ -9,7 +9,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * After an account gets approved/disapproved, a new account shows up until the list with unapproved accounts gets empty.
  */
 public class ApproveAccounts extends JPanel {
-
+    private final GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    public final int PANEL_WIDTH = (int) (env.getMaximumWindowBounds().getWidth());
+    public final int PANEL_HEIGHT = (int) (env.getMaximumWindowBounds().getHeight());
     /**
      * @param admin This is the admin that is logged in the app
      * @param listOfAccounts The list of total accounts
@@ -19,13 +21,18 @@ public class ApproveAccounts extends JPanel {
      */
     public ApproveAccounts(Admin admin,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,MainFrame mainFrame){
         AtomicInteger i= new AtomicInteger();
-        setSize(1000,800);
+
+        this.setSize(PANEL_WIDTH,PANEL_HEIGHT);
         setBackground(Color.WHITE);
 
+        int MARGIN_TITLE_FROM_TOP = 10;
+        int pixelCounter = MARGIN_TITLE_FROM_TOP;
+        
         JLabel label = new JLabel("Approve & Disapprove Accounts");
         label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
         label.setForeground(new Color(0x06307C));
-        label.setBounds(500,50,500,50);
+        label.setBounds(0, MARGIN_TITLE_FROM_TOP, PANEL_WIDTH, 40);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         add(label);
 
         JLabel acc = new JLabel("Account");
@@ -33,15 +40,8 @@ public class ApproveAccounts extends JPanel {
         JLabel fullName = new JLabel("Full Name");
         JLabel username = new JLabel("username");
 
-        JLabel error = new JLabel("No more new accounts to approve/disapprove");
-        error.setBounds(490,300,800,100);
-        error.setFont(new Font("Tahoma",Font.ITALIC+Font.BOLD,18));
-        error.setForeground(Color.red);
-        error.setVisible(false);
-        add(error);
-
         JButton returnButton = new JButton("Return");
-        returnButton.setBounds(10,10,50,20);
+        returnButton.setBounds(0, MARGIN_TITLE_FROM_TOP,50,20);
         returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
         returnButton.setForeground(new Color(191, 0, 255));
         returnButton.setBackground(Color.white);
@@ -57,36 +57,54 @@ public class ApproveAccounts extends JPanel {
             mainFrame.getContentPane().repaint();
         });
 
+        pixelCounter+=150;
+
         JLabel empty = new JLabel("The List is empty");
         empty.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,24));
         empty.setForeground(new Color(0x06307C));
-        empty.setBounds(610,300,400,30);
+        empty.setBounds(0,pixelCounter,PANEL_WIDTH,30);
+        empty.setHorizontalAlignment(SwingConstants.CENTER);
         empty.setVisible(false);
         add(empty);
 
+        JLabel error = new JLabel("No more new accounts to approve/disapprove");
+        error.setBounds(0, pixelCounter, PANEL_WIDTH, 40);
+        error.setHorizontalAlignment(SwingConstants.CENTER);
+        error.setFont(new Font("Tahoma",Font.ITALIC+Font.BOLD,18));
+        error.setForeground(Color.red);
+        error.setVisible(false);
+        add(error);
+
         acc.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,20));
         acc.setForeground(new Color(0x06307C));
-        acc.setBounds(600,200,400,30);
+        acc.setBounds(0, pixelCounter, PANEL_WIDTH, 40);
+        acc.setHorizontalAlignment(SwingConstants.CENTER);
         add(acc);
 
+        pixelCounter += 50;
         email.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,20));
         email.setForeground(new Color(0x06307C));
-        email.setBounds(600,250,400,30);
+        email.setBounds(0, pixelCounter, PANEL_WIDTH, 40);
+        email.setHorizontalAlignment(SwingConstants.CENTER);
         add(email);
 
+        pixelCounter += 50;
         fullName.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,20));
         fullName.setForeground(new Color(0x06307C));
-        fullName.setBounds(600,300,400,30);
+        fullName.setBounds(0, pixelCounter, PANEL_WIDTH, 40);
+        fullName.setHorizontalAlignment(SwingConstants.CENTER);
         add(fullName);
 
+        pixelCounter += 50;
         username.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,20));
         username.setForeground(new Color(0x06307C));
-        username.setBounds(600,350,400,30);
+        username.setBounds(0, pixelCounter, PANEL_WIDTH, 40);
+        username.setHorizontalAlignment(SwingConstants.CENTER);
         add(username);
 
-
+        pixelCounter += 200;
         JButton approve = new JButton("Approve");
-        approve.setBounds(450,500,200,30);
+        approve.setBounds(PANEL_WIDTH/3,pixelCounter,200,30);
         approve.setFont(new Font("sans serif",Font.ITALIC+Font.ITALIC,16));
         approve.setBackground(Color.GREEN);
         approve.setForeground(Color.WHITE);
@@ -98,7 +116,7 @@ public class ApproveAccounts extends JPanel {
         disapprove.setFocusable(false);
         disapprove.setBackground(Color.RED);
         disapprove.setForeground(Color.white);
-        disapprove.setBounds(720,500,200,30);
+        disapprove.setBounds(PANEL_WIDTH/3 + 300,pixelCounter,200,30);
         disapprove.setVisible(false);
         add(disapprove);
 
