@@ -200,7 +200,6 @@ public class ApproveAccounts extends JPanel {
             });
 
         }
-
         setLayout(null);
     }
 }
