@@ -9,38 +9,45 @@ import java.util.ArrayList;
  * which is based on their email because it's always unique.
  */
 public class TrackingWindow extends JPanel {
+
+    GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    public final int PANEL_WIDTH = (int) (env.getMaximumWindowBounds().getWidth());
+    public final int PANEL_HEIGHT = (int) (env.getMaximumWindowBounds().getHeight());
+    private final int TABLE_WIDTH = (int) (0.9*PANEL_WIDTH);
+    private final int TABLE_HEIGHT = (int) (0.7*PANEL_HEIGHT);
+    private final int MARGIN_TABLE_FROM_TOP = (PANEL_HEIGHT-TABLE_HEIGHT)/2;
+    private final int MARGIN_BETWEEN_TABLE_AND_EDGES = (PANEL_WIDTH-TABLE_WIDTH)/2;
+
     public TrackingWindow(Admin admin,AccountsCreated listOfAccounts,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,MainFrame mainFrame){
         setLayout(null);
-        setSize(1500,800);
+        setSize(PANEL_WIDTH,PANEL_HEIGHT);
         setBackground(Color.WHITE);
+
+        int pixelCounter = 0;
 
         JLabel label = new JLabel("Track Customers & Providers");
         label.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,28));
         label.setForeground(new Color(0x06307C));
-        label.setBounds(520,50,400,30);
+        label.setBounds(0,pixelCounter,PANEL_WIDTH,30);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         add(label);
 
-        JLabel customerDetails= new JLabel();
-        customerDetails.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
-        customerDetails.setForeground(new Color(0x06307C));
-        customerDetails.setBounds(500,135,800,50);
-        customerDetails.setVisible(false);
-
-        JLabel label2 = new JLabel("Choose a user:");
-        label2.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
-        label2.setForeground(new Color(0x06307C));
-        label2.setBounds(20,145,400,30);
-        label2.setVisible(false);
-        add(label2);
-
         JButton returnButton = new JButton("Return");
-        returnButton.setBounds(10,10,50,20);
+        returnButton.setBounds(0, pixelCounter,50,20);
         returnButton.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
         returnButton.setForeground(new Color(191, 0, 255));
         returnButton.setBackground(Color.white);
         returnButton.setFocusable(false);
         returnButton.setBorder(null);
         add(returnButton);
+
+        pixelCounter+=50;
+        JLabel customerDetails= new JLabel();
+        customerDetails.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,14));
+        customerDetails.setForeground(new Color(0x06307C));
+        customerDetails.setBounds(0,pixelCounter,PANEL_WIDTH,30);
+        customerDetails.setHorizontalAlignment(SwingConstants.CENTER);
+        customerDetails.setVisible(false);
 
         String[] allEmails = listOfAccounts.getAllCustomersEmail();
         JComboBox<String > users = new JComboBox<>(allEmails) {
@@ -56,9 +63,9 @@ public class TrackingWindow extends JPanel {
                 }
             }
         };
+
         users.setSelectedIndex(0);
         users.setVisible(false);
-        users.setBounds(170,150,220,25);
 
         returnButton.addActionListener(e -> {
             mainFrame.remove(this);
@@ -102,7 +109,6 @@ public class TrackingWindow extends JPanel {
             int optionFromComboBox = filters.getSelectedIndex();
             if (optionFromComboBox == 1 || optionFromComboBox==2) {
                 users.setVisible(false);
-                label2.setVisible(false);
                 customerDetails.setVisible(false);
                 for(int i=0;i<7;i++){
                     table.getColumnModel().getColumn(i).setHeaderValue(tableHeaders3[i]);
@@ -111,7 +117,6 @@ public class TrackingWindow extends JPanel {
             }
             else if(optionFromComboBox==0){
                 users.setVisible(false);
-                label2.setVisible(false);
                 customerDetails.setVisible(false);
                 for(int i=0;i<7;i++){
                     table.getColumnModel().getColumn(i).setHeaderValue(tableHeaders[i]);
@@ -123,7 +128,6 @@ public class TrackingWindow extends JPanel {
             }
             else if(optionFromComboBox==3){
                 users.setVisible(true);
-                label2.setVisible(true);
                 users.addActionListener(e1 -> {
                     int optionFromUserComboBox = users.getSelectedIndex();
                     String email = allEmails[optionFromUserComboBox];
@@ -146,15 +150,18 @@ public class TrackingWindow extends JPanel {
             }
         });
 
-        filters.setBounds(170,100,220,20);
+        filters.setBounds(PANEL_WIDTH/20,pixelCounter,200,25);
         filters.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         filters.setForeground(new Color(0x06307C));
+
+        pixelCounter += 30;
+        users.setBounds(PANEL_WIDTH/20,pixelCounter,200,25);
 
         table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC+Font.BOLD, 12));
         table.getTableHeader().setBackground(new Color(182, 219, 252));
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(170,200,1200,500);
+        scrollPane.setBounds(MARGIN_BETWEEN_TABLE_AND_EDGES,MARGIN_TABLE_FROM_TOP,TABLE_WIDTH,TABLE_HEIGHT);
         scrollPane.getViewport().setBackground(Color.WHITE);
 
 
@@ -168,7 +175,8 @@ public class TrackingWindow extends JPanel {
     }
 
     /**
-     * This method changes the admin chooses to see all the accommodations from all the providers
+     * This method makes a string array that contains all the accommodations of all the users.
+     * It is used to initialise the contents of the JTable.
      * @param listOfAccommodations All the accommodations of the app
      * @param reservations All the reservations of the app
      * @return A String array that contains the new data that are going to be shown in the JTable
@@ -192,6 +200,13 @@ public class TrackingWindow extends JPanel {
         return data;
     }
 
+    /**
+     * This method is used to update the contents of the JTable when an admin choose the first or the second option from the combo box.
+     * It deletes all the previous contents and adds the new ones
+     * @param optionFromComboBox The option of the combo box that can be 1 or 2 for this method
+     * @param model The model of the JTable
+     * @param listOfReservations List of all the reservations made
+     */
     public void updateTable(int optionFromComboBox,DefaultTableModel model,ReservationsCreated listOfReservations){
         model.setRowCount(0);
         ArrayList<Reservation> reservations;
@@ -227,6 +242,14 @@ public class TrackingWindow extends JPanel {
         }
     }
 
+    /**
+     * This method is used when an admin wants to track a specific user, and it updates the JTable with new contents.
+     * All the accommodations for a provider and all the reservations for a customer
+     * @param user The user an admin wants to track
+     * @param model The model of the JTable
+     * @param listOfAccommodations A list with all the accommodations
+     * @param listOfReservations A list with all the reservations
+     */
     public void updateTableForASpecificUser(User user,DefaultTableModel model,AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations){
         model.setRowCount(0);
         if(user instanceof Customer){
@@ -273,6 +296,13 @@ public class TrackingWindow extends JPanel {
         }
     }
 
+    /**
+     * This method is used when an admin wants to track all the accommodations. It updates the JTable with new contents.
+     * @param listOfAccommodations A list with all the accommodations
+     * @param listOfReservations A list with all the reservations
+     * @param model The model of the JTable
+     * @return A string array with all the accommodation names.
+     */
     public String[][] makeAccommodationList(AccommodationsCreated listOfAccommodations,ReservationsCreated listOfReservations,DefaultTableModel model){
         model.setRowCount(0);
         ArrayList<Accommodation> accommodationList;
@@ -291,7 +321,6 @@ public class TrackingWindow extends JPanel {
             data[count][6] = String.valueOf(listOfReservations.getTheNumberOfReservationsOfAnAccommodation(x));
             count++;
         }
-        
         return data;
     }
 }
