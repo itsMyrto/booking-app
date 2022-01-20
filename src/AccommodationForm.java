@@ -21,11 +21,15 @@ public class AccommodationForm extends JPanel {
      */
     public AccommodationForm(Provider provider,AccommodationsCreated listOfAccommodations,AccountsCreated listOfAccounts,ReservationsCreated listOfReservations,MainFrame mainFrame){
 
-        setSize(1500, 800);
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        int PANEL_HEIGHT = (int) (env.getMaximumWindowBounds().getHeight());
+        int PANEL_WIDTH = (int) (env.getMaximumWindowBounds().getWidth());
+        this.setSize(PANEL_WIDTH, PANEL_HEIGHT);
+        int xAxis = (int) (PANEL_WIDTH/3.8);
         setLayout(null);
 
         JButton continueProcess = new JButton("Continue");
-        continueProcess.setBounds(70,660,200,35);
+        continueProcess.setBounds(PANEL_WIDTH/13, (int) (PANEL_HEIGHT/1.5),100,30);
         continueProcess.setForeground(Color.WHITE);
         continueProcess.setBackground(new Color(6, 48, 124));
         continueProcess.setFont(new Font("sans serif",Font.ITALIC,15));
@@ -38,18 +42,18 @@ public class AccommodationForm extends JPanel {
 
         JLabel changeTheType = new JLabel("What kind of accommodation is it?");
         changeTheType.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,15));
-        changeTheType.setBounds(50,50,300,30);
+        changeTheType.setBounds(PANEL_WIDTH/22,PANEL_HEIGHT/12,300,30);
         changeTheType.setForeground(new Color(0x06307C));
 
         JLabel information = new JLabel("Information:");
         information.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,18));
-        information.setBounds(120,200,200,30);
+        information.setBounds(PANEL_WIDTH/15,PANEL_HEIGHT/4,200,30);
         information.setForeground(new Color(0x06307C));
 
         JLabel facilities = new JLabel("Facilities:");
         facilities.setFont(new Font("sans serif",Font.ITALIC+Font.BOLD,18));
         facilities.setForeground(new Color(0x06307C));
-        facilities.setBounds(450,90,200,30);
+        facilities.setBounds(xAxis,PANEL_HEIGHT/8,200,30);
 
         String[] types = {"Hotel","Apartment","Hostel","Motel"};
         typeOfAccommodation = new JComboBox<>(types){
@@ -67,7 +71,7 @@ public class AccommodationForm extends JPanel {
         };
 
         typeOfAccommodation.setSelectedIndex(0);
-        typeOfAccommodation.setBounds(100,115,150,25);
+        typeOfAccommodation.setBounds(PANEL_WIDTH/18,PANEL_HEIGHT/6,150,25);
         typeOfAccommodation.setVisible(true);
         typeOfAccommodation.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         typeOfAccommodation.getEditor().getEditorComponent().setBackground(Color.WHITE);
@@ -130,54 +134,71 @@ public class AccommodationForm extends JPanel {
         petsGroup.add(petsNotAllowed);
 
         JTextField nameOfTheAccommodation = new JTextField("Name of the Accommodation");
-        nameOfTheAccommodation.setBounds(70,250,200,30);
+        nameOfTheAccommodation.setBounds(PANEL_WIDTH/22,PANEL_HEIGHT/3,200,30);
+
+        int pixels = PANEL_HEIGHT/3;
+        pixels += 50;
 
         JTextField country = new JTextField("Country");
-        country.setBounds(70,300,200,30);
+        country.setBounds(PANEL_WIDTH/22,pixels,200,30);
 
+        pixels+=50;
         JTextField city = new JTextField("City");
-        city.setBounds(70,350,200,30);
+        city.setBounds(PANEL_WIDTH/22,pixels,200,30);
 
+        pixels+=50;
         JTextField street = new JTextField("Street");
-        street.setBounds(70,400,200,30);
+        street.setBounds(PANEL_WIDTH/22,pixels,200,30);
 
+        pixels+=50;
         JTextField streetNumber = new JTextField("Street Number");
-        streetNumber.setBounds(70,450,200,30);
+        streetNumber.setBounds(PANEL_WIDTH/22,pixels,200,30);
+
+        pixels = PANEL_HEIGHT/5;
 
         JLabel wifi = new JLabel("Does it have Wifi?");
         wifi.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         wifi.setForeground(new Color(0x06307C));
-        wifi.setBounds(430,140,200,50);
-        hasWifi.setBounds(430,200,50,30);
-        doesNotHaveWifi.setBounds(480,200,50,30);
+        wifi.setBounds(xAxis,pixels,200,50);
+        pixels+=50;
+        hasWifi.setBounds(xAxis,pixels,50,30);
+        doesNotHaveWifi.setBounds(xAxis+50,pixels,50,30);
 
         JLabel parking = new JLabel("Does it have Parking?");
         parking.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         parking.setForeground(new Color(0x06307C));
-        parking.setBounds(430,260,200,50);
-        hasParking.setBounds(430,320,50,30);
-        doesNotHaveParking.setBounds(480,320,50,30);
+        pixels+=50;
+        parking.setBounds(xAxis,pixels,200,50);
+        pixels+=50;
+        hasParking.setBounds(xAxis,pixels,50,30);
+        doesNotHaveParking.setBounds(xAxis+50,pixels,50,30);
 
+        pixels+=50;
         JLabel restaurant = new JLabel("Does it have a Restaurant?");
         restaurant.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         restaurant.setForeground(new Color(0x06307C));
-        restaurant.setBounds(430,380,200,50);
-        hasRestaurant.setBounds(430,440,50,30);
-        doesNotHaveRestaurant.setBounds(480,440,50,30);
+        restaurant.setBounds(xAxis,pixels,200,50);
+        pixels+=50;
+        hasRestaurant.setBounds(xAxis,pixels,50,30);
+        doesNotHaveRestaurant.setBounds(xAxis+50,pixels,50,30);
 
         JLabel pets = new JLabel("Are pets allowed?");
         pets.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         pets.setForeground(new Color(0x06307C));
-        pets.setBounds(430,500,200,50);
-        petsAllowed.setBounds(430,560,50,30);
-        petsNotAllowed.setBounds(480,560,50,30);
+        pixels+=50;
+        pets.setBounds(xAxis,pixels,200,50);
+        pixels+=50;
+        petsAllowed.setBounds(xAxis,pixels,50,30);
+        petsNotAllowed.setBounds(xAxis+50,pixels,50,30);
 
+        pixels+=50;
         JLabel pool = new JLabel("Does it have a pool?");
         pool.setFont(new Font("Sans Sheriff", Font.ITALIC+Font.BOLD, 12));
         pool.setForeground(new Color(0x06307C));
-        pool.setBounds(430,620,200,50);
-        hasPool.setBounds(430,680,50,30);
-        doesNotHavePool.setBounds(480,680,50,30);
+        pool.setBounds(xAxis,pixels,200,50);
+        pixels+=50;
+        hasPool.setBounds(xAxis,pixels,50,30);
+        doesNotHavePool.setBounds(xAxis+50,pixels,50,30);
 
         continueProcess.addActionListener(e -> {
             String nameTxt = nameOfTheAccommodation.getText();
